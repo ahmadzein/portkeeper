@@ -14,6 +14,8 @@
     "dev:electron": "electron-vite dev",
     "start": "electron .",
     "build": "npm run build:cli && npm run build:gui",
+    "fix:electron": "npm rebuild better-sqlite3 --runtime=electron --target=28.0.0 --dist-url=https://electronjs.org/headers --abi=119",
+    "fix:node": "npm rebuild better-sqlite3",
     "build:cli": "tsc -p tsconfig.cli.json",
     "build:gui": "electron-vite build",
     "test": "jest",

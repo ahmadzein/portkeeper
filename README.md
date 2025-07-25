@@ -83,10 +83,17 @@ Launch the GUI application:
 portman gui
 ```
 
-**Note**: The GUI feature requires the project to be built first. If you encounter issues, run:
+**Note**: The GUI feature requires the project to be built first. If you encounter native module errors:
+
+For GUI (Electron):
 ```bash
 npm run build:gui
-npm rebuild better-sqlite3 --runtime=electron --target=28.0.0
+./scripts/fix-native-modules.sh electron
+```
+
+For CLI (Node.js):
+```bash
+./scripts/fix-native-modules.sh
 ```
 
 ## Development
