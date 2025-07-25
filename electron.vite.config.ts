@@ -5,11 +5,6 @@ import { resolve } from 'path';
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
-    resolve: {
-      alias: {
-        '@core': resolve(__dirname, 'src/core'),
-      },
-    },
     build: {
       outDir: 'dist/electron/main',
       rollupOptions: {
@@ -48,7 +43,6 @@ export default defineConfig({
         '@hooks': resolve(__dirname, 'src/gui/renderer/hooks'),
         '@pages': resolve(__dirname, 'src/gui/renderer/pages'),
         '@store': resolve(__dirname, 'src/gui/renderer/store'),
-        '@core': resolve(__dirname, 'src/core'),
       },
     },
   },
