@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Table, Tag, Button, Space, Input, Select, message, Popconfirm } from 'antd';
 import { SearchOutlined, DeleteOutlined, StopOutlined } from '@ant-design/icons';
 import type { Port, PortStatus } from '../../../core/models/Port';
 import { usePortStore } from '@store/portStore';
 import type { ColumnsType } from 'antd/es/table';
+import type { TableRowSelection } from 'antd/es/table/interface';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -19,6 +20,8 @@ const Dashboard: React.FC = () => {
     releasePort,
     killPort 
   } = usePortStore();
+  
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const handleRelease = async (port: number) => {
     try {
@@ -36,6 +39,64 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       message.error(`Failed to kill process on port ${port}`);
     }
+  };
+
+  const handleBulkRelease = async () => {
+    const selectedPorts = selectedRowKeys.map(key => Number(key));
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const port of selectedPorts) {
+      try {
+        await releasePort(port);
+        successCount++;
+      } catch (error) {
+        errorCount++;
+      }
+    }
+
+    if (successCount > 0) {
+      message.success(`Released ${successCount} ports`);
+    }
+    if (errorCount > 0) {
+      message.error(`Failed to release ${errorCount} ports`);
+    }
+
+    setSelectedRowKeys([]);
+  };
+
+  const handleBulkKill = async () => {
+    const selectedPorts = selectedRowKeys.map(key => Number(key));
+    const portsWithProcesses = selectedPorts.filter(port => {
+      const activePort = activePorts.find(p => p.number === port);
+      return activePort !== undefined;
+    });
+
+    if (portsWithProcesses.length === 0) {
+      message.warning('No active processes found for selected ports');
+      return;
+    }
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const port of portsWithProcesses) {
+      try {
+        await killPort(port);
+        successCount++;
+      } catch (error) {
+        errorCount++;
+      }
+    }
+
+    if (successCount > 0) {
+      message.success(`Killed ${successCount} processes`);
+    }
+    if (errorCount > 0) {
+      message.error(`Failed to kill ${errorCount} processes`);
+    }
+
+    setSelectedRowKeys([]);
   };
 
   const getStatusTag = (status: PortStatus) => {
@@ -144,6 +205,15 @@ const Dashboard: React.FC = () => {
     },
   ];
 
+  const rowSelection: TableRowSelection<Port> = {
+    selectedRowKeys,
+    onChange: (newSelectedRowKeys: React.Key[]) => {
+      setSelectedRowKeys(newSelectedRowKeys);
+    },
+  };
+
+  const hasSelected = selectedRowKeys.length > 0;
+
   return (
     <Card>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -167,6 +237,36 @@ const Dashboard: React.FC = () => {
               <Option value="free">Free</Option>
             </Select>
           </Space>
+          {hasSelected && (
+            <Space>
+              <span style={{ marginRight: 8 }}>
+                {`Selected ${selectedRowKeys.length} ports`}
+              </span>
+              <Popconfirm
+                title="Release selected ports?"
+                description={`Are you sure you want to release ${selectedRowKeys.length} ports?`}
+                onConfirm={handleBulkRelease}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button danger icon={<DeleteOutlined />}>
+                  Release Selected
+                </Button>
+              </Popconfirm>
+              <Popconfirm
+                title="Kill processes?"
+                description={`Are you sure you want to kill processes on selected ports?`}
+                onConfirm={handleBulkKill}
+                okText="Yes"
+                cancelText="No"
+                okButtonProps={{ danger: true }}
+              >
+                <Button danger icon={<StopOutlined />}>
+                  Kill Selected
+                </Button>
+              </Popconfirm>
+            </Space>
+          )}
         </Space>
 
         <Table
@@ -174,6 +274,7 @@ const Dashboard: React.FC = () => {
           dataSource={ports}
           rowKey="number"
           loading={isLoading}
+          rowSelection={rowSelection}
           pagination={{
             pageSize: 10,
             showSizeChanger: true,

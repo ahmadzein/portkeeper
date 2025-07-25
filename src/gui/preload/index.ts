@@ -21,6 +21,28 @@ const api = {
     
     scan: (): Promise<ActivePort[]> => 
       ipcRenderer.invoke('port:scan'),
+    
+    export: (): Promise<any> => 
+      ipcRenderer.invoke('port:export'),
+    
+    import: (data: any): Promise<{ imported: number; skipped: number; errors: string[] }> => 
+      ipcRenderer.invoke('port:import', data),
+  },
+  
+  dialog: {
+    showSaveDialog: (): Promise<Electron.SaveDialogReturnValue> => 
+      ipcRenderer.invoke('dialog:showSaveDialog'),
+    
+    showOpenDialog: (): Promise<Electron.OpenDialogReturnValue> => 
+      ipcRenderer.invoke('dialog:showOpenDialog'),
+  },
+  
+  file: {
+    write: (filePath: string, data: string): Promise<boolean> => 
+      ipcRenderer.invoke('file:write', filePath, data),
+    
+    read: (filePath: string): Promise<string> => 
+      ipcRenderer.invoke('file:read', filePath),
   },
   
   app: {
