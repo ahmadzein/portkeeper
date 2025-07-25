@@ -62,8 +62,13 @@ portman kill 3000
 
 ### GUI
 ```bash
-# Launch the GUI (not implemented yet)
+# Launch the GUI
 portman gui
+```
+
+If you encounter issues with the GUI, rebuild the native modules:
+```bash
+npm rebuild better-sqlite3 --runtime=electron --target=28.0.0
 ```
 
 ## Troubleshooting

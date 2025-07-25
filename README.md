@@ -83,7 +83,11 @@ Launch the GUI application:
 portman gui
 ```
 
-Or use the desktop application directly after installation.
+**Note**: The GUI feature requires the project to be built first. If you encounter issues, run:
+```bash
+npm run build:gui
+npm rebuild better-sqlite3 --runtime=electron --target=28.0.0
+```
 
 ## Development
 
