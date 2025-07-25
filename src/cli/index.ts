@@ -9,6 +9,7 @@ import { killCommand } from './commands/kill.js';
 import { scanCommand } from './commands/scan.js';
 import { exportCommand } from './commands/export.js';
 import { importCommand } from './commands/import.js';
+import { guiCommand } from './commands/gui.js';
 
 const program = new Command();
 
@@ -25,6 +26,7 @@ program.addCommand(killCommand);
 program.addCommand(scanCommand);
 program.addCommand(exportCommand);
 program.addCommand(importCommand);
+program.addCommand(guiCommand);
 
 program.on('command:*', () => {
   console.error(chalk.red(`Invalid command: ${program.args.join(' ')}`));

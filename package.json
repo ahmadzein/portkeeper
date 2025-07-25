@@ -2,7 +2,7 @@
   "name": "portmanager",
   "version": "1.0.0",
   "description": "A comprehensive port management tool for developers",
-  "main": "dist/cli/index.js",
+  "main": "dist/electron/main/index.js",
   "type": "module",
   "bin": {
     "portman": "./dist/cli/index.js"
@@ -12,6 +12,7 @@
     "dev:cli": "tsx watch src/cli/index.ts",
     "dev:gui": "npm run dev:electron",
     "dev:electron": "electron-vite dev",
+    "start": "electron .",
     "build": "npm run build:cli && npm run build:gui",
     "build:cli": "tsc -p tsconfig.cli.json",
     "build:gui": "electron-vite build",
