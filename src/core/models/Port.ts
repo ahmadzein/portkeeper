@@ -29,6 +29,24 @@ export interface ActivePort {
   number: number;
   pid: number;
   processName?: string;
+  state?: string;
+  address?: string;
+}
+
+export interface RequestOptions {
+  count: number;
+  projectName: string;
+  description?: string;
+  tags?: string[];
+  sequential?: boolean;
+  startPort?: number;
+  endPort?: number;
+  avoid?: number[];
+}
+
+export interface RequestResult {
+  ports: Port[];
+  summary: string;
 }
 
 export class PortError extends Error {

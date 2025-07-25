@@ -1,6 +1,6 @@
 import { ipcMain, dialog, BrowserWindow } from 'electron';
 import { PortService } from '../../../core/services/PortService.js';
-import { ReserveOptions, PortFilter } from '../../../core/models/Port.js';
+import { ReserveOptions, PortFilter, RequestOptions } from '../../../core/models/Port.js';
 import fs from 'fs/promises';
 
 const portService = new PortService();
@@ -163,6 +163,15 @@ export function setupIpcHandlers(): void {
     try {
       const data = await fs.readFile(filePath, 'utf-8');
       return data;
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  });
+
+  // Request operations
+  ipcMain.handle('port:request', async (_, options: RequestOptions) => {
+    try {
+      return await portService.requestPorts(options);
     } catch (error) {
       throw new Error((error as Error).message);
     }

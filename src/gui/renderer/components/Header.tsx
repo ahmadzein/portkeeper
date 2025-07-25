@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Layout, Typography, Space, Button, Switch, Dropdown, Menu, message } from 'antd';
-import { ReloadOutlined, PlusOutlined, BulbOutlined, DownloadOutlined, UploadOutlined, MenuOutlined, SearchOutlined } from '@ant-design/icons';
+import { ReloadOutlined, PlusOutlined, BulbOutlined, DownloadOutlined, UploadOutlined, MenuOutlined, SearchOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 import { usePortStore } from '@store/portStore';
 import { useTheme } from '@hooks/useTheme';
 import ReservePortModal from './ReservePortModal';
 import CheckPortModal from './CheckPortModal';
+import RequestPortsModal from './RequestPortsModal';
 
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
@@ -21,6 +22,7 @@ const Header: React.FC<HeaderProps> = ({ onReserveClick, showReserveModal = fals
   const internalShowModal = showReserveModal;
   const internalSetShowModal = setShowReserveModal || (() => {});
   const [showCheckModal, setShowCheckModal] = useState(false);
+  const [showRequestModal, setShowRequestModal] = useState(false);
 
   const handleExport = async () => {
     try {
@@ -74,6 +76,12 @@ const Header: React.FC<HeaderProps> = ({ onReserveClick, showReserveModal = fals
   };
 
   const menuItems = [
+    {
+      key: 'request',
+      icon: <AppstoreAddOutlined />,
+      label: 'Request Multiple Ports',
+      onClick: () => setShowRequestModal(true),
+    },
     {
       key: 'check',
       icon: <SearchOutlined />,
@@ -158,6 +166,11 @@ const Header: React.FC<HeaderProps> = ({ onReserveClick, showReserveModal = fals
     <CheckPortModal
       visible={showCheckModal}
       onClose={() => setShowCheckModal(false)}
+    />
+    
+    <RequestPortsModal
+      visible={showRequestModal}
+      onClose={() => setShowRequestModal(false)}
     />
     </>
   );

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { Port, PortStatus, ReserveOptions, PortFilter, ActivePort } from '../../core/models/Port';
+import type { Port, PortStatus, ReserveOptions, PortFilter, ActivePort, RequestOptions, RequestResult } from '../../core/models/Port';
 
 // Define the API that will be exposed to the renderer
 const api = {
@@ -27,6 +27,9 @@ const api = {
     
     import: (data: any): Promise<{ imported: number; skipped: number; errors: string[] }> => 
       ipcRenderer.invoke('port:import', data),
+    
+    request: (options: RequestOptions): Promise<RequestResult> => 
+      ipcRenderer.invoke('port:request', options),
   },
   
   dialog: {

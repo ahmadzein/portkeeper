@@ -7,6 +7,8 @@ import {
   ReserveOptions,
   PortFilter,
   ActivePort,
+  RequestOptions,
+  RequestResult,
   InvalidPortError,
   PortInUseError,
   PortReservedError,
@@ -307,5 +309,112 @@ export class PortService {
       lastUsed: row.last_used ? new Date(row.last_used) : undefined,
       autoRelease: row.auto_release === 1,
     };
+  }
+
+  async requestPorts(options: RequestOptions): Promise<RequestResult> {
+    const {
+      count,
+      projectName,
+      description,
+      tags,
+      sequential = true,
+      startPort = 3000,
+      endPort = 9999,
+      avoid = []
+    } = options;
+
+    // Validate inputs
+    if (count < 1 || count > 100) {
+      throw new InvalidPortError(count);
+    }
+
+    // Common ports to avoid
+    const COMMONLY_USED_PORTS = [
+      80, 443, // HTTP/HTTPS
+      3306, 5432, 27017, // Databases
+      6379, // Redis
+      22, 21, 25, // SSH, FTP, SMTP
+      ...avoid
+    ];
+
+    const availablePorts: number[] = [];
+    const reservedPorts: Port[] = [];
+
+    try {
+      if (sequential) {
+        // Sequential port selection
+        let currentPort = startPort;
+        
+        while (availablePorts.length < count && currentPort <= endPort) {
+          if (!COMMONLY_USED_PORTS.includes(currentPort)) {
+            const status = await this.checkPort(currentPort);
+            if (status === 'free') {
+              availablePorts.push(currentPort);
+            }
+          }
+          currentPort++;
+        }
+      } else {
+        // Random port selection
+        const triedPorts = new Set<number>();
+        
+        while (availablePorts.length < count && triedPorts.size < (endPort - startPort)) {
+          const randomPort = Math.floor(Math.random() * (endPort - startPort + 1)) + startPort;
+          
+          if (!triedPorts.has(randomPort) && !COMMONLY_USED_PORTS.includes(randomPort)) {
+            triedPorts.add(randomPort);
+            const status = await this.checkPort(randomPort);
+            if (status === 'free') {
+              availablePorts.push(randomPort);
+            }
+          }
+        }
+      }
+
+      // Check if we found enough ports
+      if (availablePorts.length < count) {
+        throw new Error(`Only found ${availablePorts.length} available ports out of ${count} requested`);
+      }
+
+      // Reserve all ports atomically
+      for (let i = 0; i < availablePorts.length; i++) {
+        const port = availablePorts[i];
+        const portName = `${projectName}-${i + 1}`;
+        const portTags = tags ? [...tags] : [];
+        
+        try {
+          const reserved = await this.reservePort(port!, {
+            projectName: portName,
+            description: description || `Port ${i + 1} of ${count} for ${projectName}`,
+            tags: portTags,
+          });
+          reservedPorts.push(reserved);
+        } catch (error) {
+          // Rollback on failure
+          for (const reservedPort of reservedPorts) {
+            try {
+              await this.releasePort(reservedPort.number);
+            } catch {
+              // Ignore rollback errors
+            }
+          }
+          throw error;
+        }
+      }
+
+      // Generate summary
+      const portList = reservedPorts.map(p => p.number).join(', ');
+      const summary = `Successfully reserved ${count} port(s) for "${projectName}": ${portList}`;
+
+      return {
+        ports: reservedPorts,
+        summary
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Failed to request ports');
+    }
   }
 }
