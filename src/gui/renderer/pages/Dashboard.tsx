@@ -1,0 +1,189 @@
+import React from 'react';
+import { Card, Table, Tag, Button, Space, Input, Select, message, Popconfirm } from 'antd';
+import { SearchOutlined, DeleteOutlined, StopOutlined } from '@ant-design/icons';
+import type { Port, PortStatus } from '../../../core/models/Port';
+import { usePortStore } from '@store/portStore';
+import type { ColumnsType } from 'antd/es/table';
+
+const { Search } = Input;
+const { Option } = Select;
+
+const Dashboard: React.FC = () => {
+  const { 
+    ports, 
+    activePorts, 
+    isLoading, 
+    filter,
+    setFilter,
+    refreshPorts,
+    releasePort,
+    killPort 
+  } = usePortStore();
+
+  const handleRelease = async (port: number) => {
+    try {
+      await releasePort(port);
+      message.success(`Port ${port} released successfully`);
+    } catch (error) {
+      message.error(`Failed to release port ${port}`);
+    }
+  };
+
+  const handleKill = async (port: number) => {
+    try {
+      await killPort(port);
+      message.success(`Process on port ${port} killed successfully`);
+    } catch (error) {
+      message.error(`Failed to kill process on port ${port}`);
+    }
+  };
+
+  const getStatusTag = (status: PortStatus) => {
+    const config = {
+      'free': { color: 'green', text: 'Free' },
+      'reserved': { color: 'orange', text: 'Reserved' },
+      'in-use': { color: 'red', text: 'In Use' },
+    };
+    
+    const { color, text } = config[status];
+    return <Tag color={color}>{text}</Tag>;
+  };
+
+  const columns: ColumnsType<Port> = [
+    {
+      title: 'Port',
+      dataIndex: 'number',
+      key: 'number',
+      sorter: (a, b) => a.number - b.number,
+      width: 100,
+    },
+    {
+      title: 'Project',
+      dataIndex: 'projectName',
+      key: 'projectName',
+      sorter: (a, b) => a.projectName.localeCompare(b.projectName),
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      ellipsis: true,
+      render: (text) => text || '-',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: getStatusTag,
+      filters: [
+        { text: 'Free', value: 'free' },
+        { text: 'Reserved', value: 'reserved' },
+        { text: 'In Use', value: 'in-use' },
+      ],
+      onFilter: (value, record) => record.status === value,
+      width: 120,
+    },
+    {
+      title: 'PID',
+      key: 'pid',
+      width: 100,
+      render: (_, record) => {
+        const activePort = activePorts.find(p => p.number === record.number);
+        return activePort?.pid || '-';
+      },
+    },
+    {
+      title: 'Reserved At',
+      dataIndex: 'reservedAt',
+      key: 'reservedAt',
+      render: (date) => new Date(date).toLocaleString(),
+      sorter: (a, b) => new Date(a.reservedAt).getTime() - new Date(b.reservedAt).getTime(),
+      width: 180,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      fixed: 'right',
+      width: 150,
+      render: (_, record) => (
+        <Space size="small">
+          {record.status === 'in-use' && (
+            <Popconfirm
+              title="Kill process?"
+              description={`Are you sure you want to kill the process on port ${record.number}?`}
+              onConfirm={() => handleKill(record.number)}
+              okText="Yes"
+              cancelText="No"
+              okButtonProps={{ danger: true }}
+            >
+              <Button 
+                size="small" 
+                danger 
+                icon={<StopOutlined />}
+              >
+                Kill
+              </Button>
+            </Popconfirm>
+          )}
+          <Popconfirm
+            title="Release port?"
+            description={`Are you sure you want to release port ${record.number}?`}
+            onConfirm={() => handleRelease(record.number)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button 
+              size="small" 
+              icon={<DeleteOutlined />}
+            >
+              Release
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+    <Card>
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+        <Space style={{ justifyContent: 'space-between', width: '100%' }}>
+          <Space>
+            <Search
+              placeholder="Search by project name"
+              onSearch={(value) => setFilter({ ...filter, projectName: value })}
+              style={{ width: 300 }}
+              allowClear
+              prefix={<SearchOutlined />}
+            />
+            <Select
+              placeholder="Filter by status"
+              style={{ width: 150 }}
+              allowClear
+              onChange={(value) => setFilter({ ...filter, status: value })}
+            >
+              <Option value="reserved">Reserved</Option>
+              <Option value="in-use">In Use</Option>
+              <Option value="free">Free</Option>
+            </Select>
+          </Space>
+        </Space>
+
+        <Table
+          columns={columns}
+          dataSource={ports}
+          rowKey="number"
+          loading={isLoading}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            showTotal: (total) => `Total ${total} ports`,
+          }}
+          scroll={{ x: 1000 }}
+        />
+      </Space>
+    </Card>
+  );
+};
+
+export default Dashboard;
