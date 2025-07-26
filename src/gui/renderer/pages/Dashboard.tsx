@@ -116,19 +116,21 @@ const Dashboard: React.FC = () => {
       dataIndex: 'number',
       key: 'number',
       sorter: (a, b) => a.number - b.number,
+      defaultSortOrder: 'ascend',
       width: 100,
     },
     {
       title: 'Project',
       dataIndex: 'projectName',
       key: 'projectName',
-      sorter: (a, b) => a.projectName.localeCompare(b.projectName),
+      sorter: (a, b) => (a.projectName || '').localeCompare(b.projectName || ''),
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
       ellipsis: true,
+      sorter: (a, b) => (a.description || '').localeCompare(b.description || ''),
       render: (text) => text || '-',
     },
     {
@@ -136,6 +138,7 @@ const Dashboard: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       render: getStatusTag,
+      sorter: (a, b) => a.status.localeCompare(b.status),
       filters: [
         { text: 'Free', value: 'free' },
         { text: 'Reserved', value: 'reserved' },
@@ -148,6 +151,11 @@ const Dashboard: React.FC = () => {
       title: 'PID',
       key: 'pid',
       width: 100,
+      sorter: (a, b) => {
+        const aPid = activePorts.find(p => p.number === a.number)?.pid || 0;
+        const bPid = activePorts.find(p => p.number === b.number)?.pid || 0;
+        return aPid - bPid;
+      },
       render: (_, record) => {
         const activePort = activePorts.find(p => p.number === record.number);
         return activePort?.pid || '-';
@@ -157,8 +165,8 @@ const Dashboard: React.FC = () => {
       title: 'Reserved At',
       dataIndex: 'reservedAt',
       key: 'reservedAt',
-      render: (date) => new Date(date).toLocaleString(),
-      sorter: (a, b) => new Date(a.reservedAt).getTime() - new Date(b.reservedAt).getTime(),
+      render: (date) => date ? new Date(date).toLocaleString() : '-',
+      sorter: (a, b) => new Date(a.reservedAt || 0).getTime() - new Date(b.reservedAt || 0).getTime(),
       width: 180,
     },
     {
@@ -281,6 +289,11 @@ const Dashboard: React.FC = () => {
             showTotal: (total) => `Total ${total} ports`,
           }}
           scroll={{ x: 1000 }}
+          showSorterTooltip={true}
+          onChange={(pagination, filters, sorter) => {
+            // Enable sorting by handling onChange event
+            console.log('Table sorting/filtering changed:', { pagination, filters, sorter });
+          }}
         />
       </Space>
     </Card>

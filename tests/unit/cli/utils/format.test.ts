@@ -1,5 +1,5 @@
 import { formatError, formatTable } from '@cli/utils/format';
-import { PortError, InvalidPortError } from '@core/models/Port';
+import { InvalidPortError } from '@core/models/Port';
 import chalk from 'chalk';
 
 // Disable chalk colors for testing

@@ -6,10 +6,29 @@ import { formatError } from '../utils/format.js';
 export const releaseCommand = new Command('release')
   .description('Release one or more reserved ports')
   .argument('<ports...>', 'Port numbers to release')
-  .action(async (portStrs: string[]) => {
+  .option('--json', 'Output as JSON')
+  .action(async (portStrs: string[], options: any) => {
     try {
       const service = new PortService();
       const ports = portStrs.map(p => parseInt(p, 10));
+      
+      if (options.json) {
+        const results = [];
+        for (const port of ports) {
+          try {
+            await service.releasePort(port);
+            results.push({ port, status: 'success' });
+          } catch (error) {
+            results.push({ port, status: 'error', message: (error as Error).message });
+          }
+        }
+        console.log(JSON.stringify({ results }, null, 2));
+        const hasErrors = results.some(r => r.status === 'error');
+        if (hasErrors) {
+          process.exit(1);
+        }
+        return;
+      }
       
       let successCount = 0;
       let failCount = 0;

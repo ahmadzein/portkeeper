@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Keeper - Simplify Your Development Port Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🚀</span>
+                <span class="brand-name">Port Keeper</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#cli-docs">CLI</a></li>
+                <li><a href="#gui-docs">GUI</a></li>
+                <li><a href="#ai-guide">AI Integration</a></li>
+                <li><a href="#tutorials">Tutorials</a></li>
+                <li><a href="docs/index.html" class="docs-link">📚 Full Docs</a></li>
+                <li><a href="https://github.com/ahmadzein/portkeeper" class="github-link">GitHub</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Port Keeper</h1>
+                <p class="hero-subtitle">The Ultimate Development Port Management Tool</p>
+                <p class="hero-description">
+                    Manage your local development ports with ease. Reserve ports for projects, 
+                    detect conflicts, and collaborate seamlessly with your team.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#installation" class="btn btn-primary">Get Started</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+                <div class="hero-code">
+                    <pre><code class="language-bash"># Install globally
+npm install -g portkeeper
+
+# Reserve a port
+portman reserve 3000 -n "my-api" -d "API server"
+
+# Check port status
+portman check 3000</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Port Detection</h3>
+                    <p>Automatically detect which ports are in use and by which processes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📌</div>
+                    <h3>Port Reservation</h3>
+                    <p>Reserve ports for specific projects to avoid conflicts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>CLI & GUI</h3>
+                    <p>Use via command line or beautiful desktop application</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Ready</h3>
+                    <p>JSON output for automation and AI agent integration</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Export/Import</h3>
+                    <p>Share port configurations with your team</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Reliable</h3>
+                    <p>SQLite-powered for speed and reliability</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="installation">
+        <div class="container">
+            <h2 class="section-title">Installation</h2>
+            <div class="install-options">
+                <div class="install-method">
+                    <h3>Via NPM</h3>
+                    <pre><code class="language-bash">npm install -g portkeeper</code></pre>
+                </div>
+                <div class="install-method">
+                    <h3>Via Yarn</h3>
+                    <pre><code class="language-bash">yarn global add portkeeper</code></pre>
+                </div>
+                <div class="install-method">
+                    <h3>From Source</h3>
+                    <pre><code class="language-bash">git clone https://github.com/ahmadzein/portkeeper.git
+cd portkeeper
+npm install
+npm link</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLI Documentation -->
+    <section id="cli-docs" class="cli-docs">
+        <div class="container">
+            <h2 class="section-title">CLI Documentation</h2>
+            
+            <div class="command-grid">
+                <div class="command-card">
+                    <h3>check</h3>
+                    <p>Check if a port is free, reserved, or in use</p>
+                    <pre><code class="language-bash"># Check port status
+portman check 3000
+
+# JSON output
+portman check 3000 --json</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>reserve</h3>
+                    <p>Reserve a port for a project</p>
+                    <pre><code class="language-bash"># Reserve with description
+portman reserve 3000 -n "my-api" -d "API server"
+
+# With tags
+portman reserve 3000 -n "my-api" -t "backend,prod"</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>list</h3>
+                    <p>List all reserved and in-use ports</p>
+                    <pre><code class="language-bash"># List all ports
+portman list
+
+# Filter by status
+portman list -s reserved
+
+# Filter by project
+portman list -p "api"</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>release</h3>
+                    <p>Release reserved ports</p>
+                    <pre><code class="language-bash"># Release single port
+portman release 3000
+
+# Release multiple
+portman release 3000 3001 3002</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>scan</h3>
+                    <p>Scan for all active ports</p>
+                    <pre><code class="language-bash"># Scan all ports
+portman scan
+
+# JSON output for automation
+portman scan --json</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>request</h3>
+                    <p>Request multiple available ports</p>
+                    <pre><code class="language-bash"># Request 3 sequential ports
+portman request 3 -n "microservices"
+
+# Request random ports
+portman request 5 -n "tests" -r</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>kill</h3>
+                    <p>Kill process using a port</p>
+                    <pre><code class="language-bash"># Kill process on port
+portman kill 3000
+
+# Force kill without confirmation
+portman kill 3000 -f</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>export/import</h3>
+                    <p>Export and import configurations</p>
+                    <pre><code class="language-bash"># Export to file
+portman export -o config.json
+
+# Import from file
+portman import config.json</code></pre>
+                </div>
+
+                <div class="command-card">
+                    <h3>ai</h3>
+                    <p>Display AI agent instructions</p>
+                    <pre><code class="language-bash"># Human-readable guide
+portman ai
+
+# Machine-readable JSON
+portman ai --json</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUI Documentation -->
+    <section id="gui-docs" class="gui-docs">
+        <div class="container">
+            <h2 class="section-title">GUI Documentation</h2>
+            
+            <div class="gui-features">
+                <div class="gui-feature">
+                    <h3>Launch the GUI</h3>
+                    <pre><code class="language-bash">portman gui</code></pre>
+                    <p>Opens the Port Keeper desktop application</p>
+                </div>
+
+                <div class="gui-screenshots">
+                    <div class="screenshot-card">
+                        <h4>Dashboard View</h4>
+                        <div class="screenshot-placeholder">
+                            <p>📊 Dashboard Screenshot</p>
+                        </div>
+                        <ul>
+                            <li>View all reserved ports</li>
+                            <li>Search and filter ports</li>
+                            <li>Quick actions: Check, Release, Kill</li>
+                            <li>Dark/Light theme support</li>
+                        </ul>
+                    </div>
+
+                    <div class="screenshot-card">
+                        <h4>Active Ports Scan</h4>
+                        <div class="screenshot-placeholder">
+                            <p>🔍 Scan View Screenshot</p>
+                        </div>
+                        <ul>
+                            <li>Real-time port scanning</li>
+                            <li>Shows process information</li>
+                            <li>Displays reservation details</li>
+                            <li>Kill processes directly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gui-shortcuts">
+                    <h3>Keyboard Shortcuts</h3>
+                    <div class="shortcuts-grid">
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + N</kbd>
+                            <span>New Reservation</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + R</kbd>
+                            <span>Refresh</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + F</kbd>
+                            <span>Search</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + E</kbd>
+                            <span>Export</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + I</kbd>
+                            <span>Import</span>
+                        </div>
+                        <div class="shortcut">
+                            <kbd>Cmd/Ctrl + S</kbd>
+                            <span>Scan Ports</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agent Guide -->
+    <section id="ai-guide" class="ai-guide">
+        <div class="container">
+            <h2 class="section-title">AI Agent Integration</h2>
+            <p class="section-subtitle">Port Keeper is designed for automation with comprehensive JSON support</p>
+
+            <div class="ai-examples">
+                <div class="ai-example">
+                    <h3>Bash Automation</h3>
+                    <pre><code class="language-bash">#!/bin/bash
+# Check if port is available
+STATUS=$(portman check 3000 --json | jq -r '.status')
+if [ "$STATUS" = "free" ]; then
+  portman reserve 3000 -n "my-app" --json
+fi
+
+# Get all ports for a project
+PORTS=$(portman list -p "my-app" --json | jq -r '.[].number')
+echo "Project ports: $PORTS"</code></pre>
+                </div>
+
+                <div class="ai-example">
+                    <h3>Python Integration</h3>
+                    <pre><code class="language-python">import subprocess
+import json
+
+def check_port(port):
+    result = subprocess.run(
+        ['portman', 'check', str(port), '--json'],
+        capture_output=True, text=True
+    )
+    return json.loads(result.stdout)
+
+def request_ports(count, name):
+    result = subprocess.run(
+        ['portman', 'request', str(count), '-n', name, '--json'],
+        capture_output=True, text=True
+    )
+    return json.loads(result.stdout)
+
+# Usage
+status = check_port(3000)
+if status['status'] == 'free':
+    ports = request_ports(3, 'my-service')
+    print(f"Allocated: {[p['number'] for p in ports['ports']]}")</code></pre>
+                </div>
+
+                <div class="ai-example">
+                    <h3>Node.js Integration</h3>
+                    <pre><code class="language-javascript">const { exec } = require('child_process');
+const util = require('util');
+const execPromise = util.promisify(exec);
+
+async function getPorts(project) {
+  const { stdout } = await execPromise(
+    `portman list -p "${project}" --json`
+  );
+  return JSON.parse(stdout);
+}
+
+async function releaseAll(project) {
+  const ports = await getPorts(project);
+  const numbers = ports.map(p => p.number).join(' ');
+  
+  if (numbers) {
+    const { stdout } = await execPromise(
+      `portman release ${numbers} --json`
+    );
+    return JSON.parse(stdout);
+  }
+}
+
+// Usage
+releaseAll('old-project').then(console.log);</code></pre>
+                </div>
+
+                <div class="ai-example">
+                    <h3>CI/CD Pipeline</h3>
+                    <pre><code class="language-yaml"># GitHub Actions Example
+- name: Setup Test Ports
+  run: |
+    # Request ports for testing
+    PORTS=$(portman request 5 -n "ci-${{ github.run_id }}" --json)
+    echo "TEST_PORTS=$PORTS" >> $GITHUB_ENV
+    
+- name: Run Tests
+  run: npm test
+  
+- name: Cleanup Ports
+  if: always()
+  run: |
+    # Extract port numbers and release
+    NUMBERS=$(echo $TEST_PORTS | jq -r '.ports[].number' | tr '\n' ' ')
+    portman release $NUMBERS --json</code></pre>
+                </div>
+            </div>
+
+            <div class="json-reference">
+                <h3>JSON Response Examples</h3>
+                <div class="json-examples">
+                    <div class="json-example">
+                        <h4>Check Response</h4>
+                        <pre><code class="language-json">{
+  "port": 3000,
+  "status": "reserved",
+  "projectName": "my-api",
+  "description": "API server"
+}</code></pre>
+                    </div>
+                    <div class="json-example">
+                        <h4>List Response</h4>
+                        <pre><code class="language-json">[
+  {
+    "number": 3000,
+    "projectName": "my-api",
+    "status": "reserved",
+    "reservedAt": "2025-07-26T10:00:00.000Z"
+  }
+]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section id="tutorials" class="tutorials">
+        <div class="container">
+            <h2 class="section-title">Tutorials</h2>
+            
+            <div class="tutorial-cards">
+                <div class="tutorial-card">
+                    <h3>Getting Started</h3>
+                    <ol>
+                        <li>Install Port Keeper globally</li>
+                        <li>Check if port 3000 is available</li>
+                        <li>Reserve it for your project</li>
+                        <li>Start your development server</li>
+                    </ol>
+                    <pre><code class="language-bash">npm install -g portmanager
+portman check 3000
+portman reserve 3000 -n "my-app" -d "Dev server"
+npm run dev</code></pre>
+                </div>
+
+                <div class="tutorial-card">
+                    <h3>Team Collaboration</h3>
+                    <p>Share port configurations with your team:</p>
+                    <pre><code class="language-bash"># Export current setup
+portman export -o team-ports.json
+
+# Commit to repo
+git add team-ports.json
+git commit -m "Add port configuration"
+
+# Team member imports
+git pull
+portman import team-ports.json</code></pre>
+                </div>
+
+                <div class="tutorial-card">
+                    <h3>Microservices Setup</h3>
+                    <p>Request multiple ports for microservices:</p>
+                    <pre><code class="language-bash"># Request 5 sequential ports
+portman request 5 -n "microservices" -d "Service cluster"
+
+# Output:
+# Allocated: 3000, 3001, 3002, 3003, 3004
+
+# Use in docker-compose.yml
+# service1: ${PORT_3000:-3000}
+# service2: ${PORT_3001:-3001}</code></pre>
+                </div>
+
+                <div class="tutorial-card">
+                    <h3>Development Workflow</h3>
+                    <p>Integrate into your development workflow:</p>
+                    <pre><code class="language-json">// package.json
+{
+  "scripts": {
+    "predev": "portman check 3000 || exit 1",
+    "dev": "next dev -p 3000",
+    "postdev": "portman release 3000"
+  }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section id="best-practices" class="best-practices">
+        <div class="container">
+            <h2 class="section-title">Best Practices</h2>
+            
+            <div class="practices-grid">
+                <div class="practice">
+                    <h3>📝 Naming Convention</h3>
+                    <p>Use descriptive project names:</p>
+                    <ul>
+                        <li><code>api-server</code> ✅</li>
+                        <li><code>frontend-dev</code> ✅</li>
+                        <li><code>test</code> ❌</li>
+                        <li><code>p1</code> ❌</li>
+                    </ul>
+                </div>
+
+                <div class="practice">
+                    <h3>🏷️ Use Tags</h3>
+                    <p>Tag ports for better organization:</p>
+                    <pre><code class="language-bash">portman reserve 3000 -n "api" -t "backend,prod"
+portman reserve 3001 -n "api" -t "backend,dev"</code></pre>
+                </div>
+
+                <div class="practice">
+                    <h3>🔄 Auto-Release</h3>
+                    <p>Use auto-release for temporary ports:</p>
+                    <pre><code class="language-bash">portman reserve 3000 -n "test-server" -a</code></pre>
+                </div>
+
+                <div class="practice">
+                    <h3>📋 Regular Cleanup</h3>
+                    <p>Clean up unused reservations:</p>
+                    <pre><code class="language-bash"># List all reserved ports
+portman list -s reserved
+
+# Release unused ones
+portman release 3000 3001</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Port Keeper</h4>
+                    <p>The ultimate tool for managing development ports</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/ahmadzein/portkeeper">GitHub</a></li>
+                        <li><a href="https://www.npmjs.com/package/portkeeper">NPM</a></li>
+                        <li><a href="#cli-docs">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://github.com/ahmadzein/portkeeper/issues">Issues</a></li>
+                        <li><a href="https://github.com/ahmadzein/portkeeper/discussions">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Port Keeper. Created by Ahmad Zein. MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

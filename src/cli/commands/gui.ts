@@ -1,54 +1,33 @@
 import { Command } from 'commander';
-import { spawn } from 'child_process';
 import chalk from 'chalk';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const guiCommand = new Command('gui')
-  .description('Launch the Port Manager GUI application')
+  .description('Information about the Port Keeper GUI application')
   .action(() => {
-    console.log(chalk.blue('🚀 Launching Port Manager GUI...'));
+    console.log(chalk.blue('\n🖥️  Port Keeper GUI\n'));
     
-    // Get the path to the Electron app
-    const projectRoot = path.resolve(__dirname, '..', '..', '..');
-    const electronPath = path.join(projectRoot, 'node_modules', '.bin', 'electron');
-    const mainPath = path.join(projectRoot, 'dist', 'electron', 'main', 'index.js');
+    console.log(chalk.yellow('The Port Keeper GUI is a standalone desktop application.'));
+    console.log(chalk.yellow('It is not included in the npm package to keep the CLI lightweight.\n'));
     
-    // Check if the GUI is built
-    if (!fs.existsSync(mainPath)) {
-      console.error(chalk.red('❌ GUI is not built. Please run "npm run build:gui" first.'));
-      process.exit(1);
-    }
+    console.log(chalk.green('Download the GUI from:'));
+    console.log(chalk.white('  🌐 https://portkeeper.net/download'));
+    console.log(chalk.white('  📦 https://github.com/ahmadzein/portkeeper/releases\n'));
     
-    // Check if electron is installed
-    if (!fs.existsSync(electronPath)) {
-      console.error(chalk.red('❌ Electron is not installed. Please run "npm install" first.'));
-      process.exit(1);
-    }
+    console.log(chalk.cyan('Available for:'));
+    console.log('  • macOS (Intel & Apple Silicon)');
+    console.log('  • Windows (64-bit)');
+    console.log('  • Linux (AppImage, deb, rpm)\n');
     
-    // Change to project directory and run npm start
-    console.log(chalk.gray(`Working directory: ${projectRoot}`));
+    console.log(chalk.gray('The GUI provides:'));
+    console.log('  • Visual port dashboard');
+    console.log('  • Real-time port scanning');
+    console.log('  • Drag-and-drop import/export');
+    console.log('  • Dark/Light themes');
+    console.log('  • All CLI features in a visual interface\n');
     
-    // Spawn npm start process
-    const electronProcess = spawn('npm', ['start'], {
-      cwd: projectRoot,
-      stdio: 'inherit',
-      shell: true,
-      detached: false
-    });
-    
-    electronProcess.on('error', (error) => {
-      console.error(chalk.red(`❌ Failed to launch GUI: ${error.message}`));
-      process.exit(1);
-    });
-    
-    electronProcess.on('exit', (code) => {
-      if (code !== 0 && code !== null) {
-        console.error(chalk.red(`❌ GUI exited with code ${code}`));
-      }
-    });
+    console.log(chalk.magenta('For developers who want to run from source:'));
+    console.log(chalk.gray('  git clone https://github.com/ahmadzein/portkeeper.git'));
+    console.log(chalk.gray('  cd portkeeper'));
+    console.log(chalk.gray('  npm install'));
+    console.log(chalk.gray('  npm run dev:gui\n'));
   });

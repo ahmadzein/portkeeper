@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import type { Port, PortStatus, ReserveOptions, PortFilter, ActivePort, RequestOptions, RequestResult } from '../../core/models/Port';
 
+console.log('[Preload] Script starting...');
+
 // Define the API that will be exposed to the renderer
 const api = {
   port: {
@@ -55,7 +57,12 @@ const api = {
 };
 
 // Expose the API to the renderer process
-contextBridge.exposeInMainWorld('portManager', api);
+try {
+  contextBridge.exposeInMainWorld('portManager', api);
+  console.log('[Preload] Successfully exposed portManager API');
+} catch (error) {
+  console.error('[Preload] Failed to expose API:', error);
+}
 
 // Type definitions for TypeScript
 export type PortManagerAPI = typeof api;

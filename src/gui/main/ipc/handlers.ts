@@ -51,28 +51,19 @@ export function setupIpcHandlers(): void {
 
   ipcMain.handle('port:scan', async () => {
     try {
-      console.log('IPC: Scanning active ports...');
       const result = await portService.scanActivePorts();
-      console.log('IPC: Scan result:', result);
       
       // Ensure we always return an array
       if (!result) {
-        console.log('IPC: No result, returning empty array');
         return [];
       }
       
       if (!Array.isArray(result)) {
-        console.error('IPC: Result is not an array:', typeof result, result);
         return [];
       }
       
       return result;
     } catch (error) {
-      console.error('IPC: Scan error details:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : 'No stack trace',
-        error
-      });
       // Return empty array instead of throwing
       return [];
     }

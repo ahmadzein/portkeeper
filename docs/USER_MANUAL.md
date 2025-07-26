@@ -25,8 +25,11 @@ Port Manager is a comprehensive tool for managing local development ports. It he
 - **Dual Interface**: Use CLI for quick tasks or GUI for visual management
 - **Real-time Sync**: CLI and GUI share the same data
 - **Cross-platform**: Works on Windows, macOS, and Linux
-- **Smart Detection**: Automatically discovers ports in use
+- **Smart Detection**: Automatically discovers ports in use with reservation details
 - **Dark Mode**: Easy on the eyes during late-night coding
+- **Request Multiple Ports**: Automatically find and reserve multiple available ports
+- **Enhanced Scanning**: See which active ports are reserved by your projects
+- **Export/Import**: Share port configurations with your team
 
 ---
 
@@ -36,18 +39,22 @@ Port Manager is a comprehensive tool for managing local development ports. It he
 - Node.js 18.0.0 or higher
 - npm or yarn package manager
 
-### Install via npm (Recommended)
+### Install via npm (Coming Soon)
 ```bash
+# Will be available after npm publish
 npm install -g portmanager
 ```
 
-### Install from Source
+### Install from Source (Currently Available)
 ```bash
-git clone https://github.com/yourusername/portmanager.git
+git clone https://github.com/ahmadzein/portmanager.git
 cd portmanager
 npm install
 npm run build
 npm link
+
+# Verify installation
+portman --version
 ```
 
 ### Verify Installation

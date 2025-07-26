@@ -14,6 +14,7 @@ export const requestCommand = new Command('request')
   .option('--start <port>', 'Start port range', '3000')
   .option('--end <port>', 'End port range', '9999')
   .option('--avoid <ports>', 'Additional ports to avoid (comma-separated)')
+  .option('--json', 'Output as JSON')
   .action(async (countStr: string, options) => {
     try {
       const count = parseInt(countStr, 10);
@@ -38,9 +39,16 @@ export const requestCommand = new Command('request')
           undefined,
       };
 
-      console.log(chalk.blue(`🔍 Searching for ${count} available port(s)...`));
+      if (!options.json) {
+        console.log(chalk.blue(`🔍 Searching for ${count} available port(s)...`));
+      }
       
       const result = await service.requestPorts(requestOptions);
+      
+      if (options.json) {
+        console.log(JSON.stringify(result, null, 2));
+        return;
+      }
       
       console.log(chalk.green(`\n✓ ${result.summary}\n`));
       

@@ -158,8 +158,6 @@ export class PortService {
     const platform = process.platform;
     let command: string;
 
-    console.log('PortService: Scanning on platform:', platform);
-
     if (platform === 'darwin' || platform === 'linux') {
       command = 'lsof -i -P -n | grep LISTEN';
     } else if (platform === 'win32') {
@@ -169,14 +167,27 @@ export class PortService {
     }
 
     try {
-      console.log('PortService: Executing command:', command);
       const { stdout } = await execAsync(command);
-      console.log('PortService: Command output length:', stdout.length);
       const ports = this.parsePortScanOutput(stdout, platform);
-      console.log('PortService: Parsed ports:', ports.length);
-      return ports;
+      
+      // Cross-reference with database to add reservation details
+      const enhancedPorts = ports.map(port => {
+        const dbPort = this.getPortFromDb(port.number);
+        if (dbPort && dbPort.status === 'reserved') {
+          // Add reservation details to the active port
+          return {
+            ...port,
+            projectName: dbPort.projectName,
+            description: dbPort.description,
+            tags: dbPort.tags,
+            reservedAt: dbPort.reservedAt
+          };
+        }
+        return port;
+      });
+      
+      return enhancedPorts;
     } catch (error) {
-      console.error('PortService: Scan error:', error);
       // Command might fail if no ports are listening
       return [];
     }
@@ -253,20 +264,45 @@ export class PortService {
         } else {
           // macOS/Linux format: command PID user FD type device size/off node name
           const parts = line.split(/\s+/);
-          if (parts.length >= 9) {
-            const portMatch = parts[8]?.match(/:(\d+)\s*\(LISTEN\)/);
-            if (portMatch) {
+          
+          if (parts.length >= 9 && parts[parts.length - 1] === '(LISTEN)') {
+            // Try to extract port information
+            let portNumber: number | null = null;
+            let pid: number | null = null;
+            let processName: string | null = null;
+            let address: string | null = null;
+            
+            // Find the column with port info (typically the second to last)
+            const portColumn = parts[parts.length - 2];
+            if (portColumn) {
+              const portMatch = portColumn.match(/([*\d.:]+):(\d+)$/);
+              
+              if (portMatch && portMatch[2]) {
+                portNumber = parseInt(portMatch[2], 10);
+                address = portMatch[1] || null;
+              }
+            }
+            
+            // Extract PID (should be second column)
+            if (parts[1] && /^\d+$/.test(parts[1])) {
+              pid = parseInt(parts[1], 10);
+            }
+            
+            // Extract process name (should be first column)
+            if (parts[0]) {
+              processName = parts[0];
+            }
+            
+            if (portNumber && pid && processName) {
               const port: ActivePort = {
-                number: parseInt(portMatch[1]!, 10),
-                pid: parseInt(parts[1]!, 10),
-                processName: parts[0],
+                number: portNumber,
+                pid: pid,
+                processName: processName,
                 state: 'LISTEN',
               };
               
-              // Extract address if available
-              const addressMatch = parts[8]?.match(/^([^:]+):(\d+)/);
-              if (addressMatch) {
-                port.address = addressMatch[1];
+              if (address && address !== '*') {
+                port.address = address;
               }
               
               ports.push(port);
@@ -274,7 +310,7 @@ export class PortService {
           }
         }
       } catch (error) {
-        console.error('Error parsing line:', line, error);
+        // Silently skip lines that can't be parsed
       }
     }
 

@@ -7,10 +7,34 @@ export const killCommand = new Command('kill')
   .description('Kill process using specified port(s)')
   .argument('<ports...>', 'Port numbers to kill processes on')
   .option('-f, --force', 'Force kill without confirmation')
+  .option('--json', 'Output as JSON')
   .action(async (portStrs: string[], options: any) => {
     try {
       const service = new PortService();
       const ports = portStrs.map(p => parseInt(p, 10));
+      
+      if (options.json) {
+        const results = [];
+        for (const port of ports) {
+          try {
+            const status = await service.checkPort(port);
+            if (status !== 'in-use') {
+              results.push({ port, status: 'warning', message: 'Port is not in use' });
+              continue;
+            }
+            await service.killProcess(port);
+            results.push({ port, status: 'success' });
+          } catch (error) {
+            results.push({ port, status: 'error', message: (error as Error).message });
+          }
+        }
+        console.log(JSON.stringify({ results }, null, 2));
+        const hasErrors = results.some(r => r.status === 'error');
+        if (hasErrors) {
+          process.exit(1);
+        }
+        return;
+      }
       
       let successCount = 0;
       let failCount = 0;

@@ -149,8 +149,8 @@ describe('PortService', () => {
 
       const ports = await service.listPorts();
       expect(ports).toHaveLength(2);
-      expect(ports[0].number).toBe(3000);
-      expect(ports[1].number).toBe(3001);
+      expect(ports[0]?.number).toBe(3000);
+      expect(ports[1]?.number).toBe(3001);
     });
 
     it('should filter ports by status', async () => {
@@ -171,7 +171,7 @@ describe('PortService', () => {
 
       const ports = await service.listPorts({ status: 'reserved' });
       expect(ports).toHaveLength(1);
-      expect(ports[0].status).toBe('reserved');
+      expect(ports[0]?.status).toBe('reserved');
     });
   });
 });

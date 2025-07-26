@@ -8,6 +8,7 @@ export const importCommand = new Command('import')
   .argument('[file]', 'Import file (default: stdin)')
   .option('--merge', 'Merge with existing ports instead of replacing')
   .option('--dry-run', 'Show what would be imported without making changes')
+  .option('--json', 'Output result summary as JSON')
   .action(async (file: string | undefined, options: any) => {
     try {
       const service = new PortService();
@@ -61,11 +62,18 @@ export const importCommand = new Command('import')
             continue;
           }
 
-          // Check if port is currently in use
+          // Check if port is currently in use or reserved
           const status = await service.checkPort(portData.number);
           if (status === 'in-use') {
             console.log(chalk.red(`✗ Cannot import port ${portData.number} (currently in use)`));
             errors++;
+            continue;
+          }
+          
+          if (status === 'reserved') {
+            // Port is already reserved
+            console.log(chalk.yellow(`⚠ Skipping port ${portData.number} (already reserved)`));
+            skipped++;
             continue;
           }
 
@@ -84,7 +92,16 @@ export const importCommand = new Command('import')
         }
       }
 
-      console.log(chalk.gray(`\nImport complete: ${imported} imported, ${skipped} skipped, ${errors} errors`));
+      if (options.json) {
+        console.log(JSON.stringify({
+          imported,
+          skipped,
+          errors,
+          total: importData.ports.length
+        }, null, 2));
+      } else {
+        console.log(chalk.gray(`\nImport complete: ${imported} imported, ${skipped} skipped, ${errors} errors`));
+      }
     } catch (error) {
       console.error(formatError(error));
       process.exit(1);

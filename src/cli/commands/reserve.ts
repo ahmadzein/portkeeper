@@ -11,6 +11,7 @@ export const reserveCommand = new Command('reserve')
   .option('-d, --desc <description>', 'Port description')
   .option('-t, --tags <tags...>', 'Tags for categorization')
   .option('--auto-release', 'Auto-release when process stops')
+  .option('--json', 'Output as JSON')
   .action(async (portStr: string, options: any) => {
     try {
       const port = parseInt(portStr, 10);
@@ -24,6 +25,11 @@ export const reserveCommand = new Command('reserve')
       };
 
       const reserved = await service.reservePort(port, reserveOptions);
+      
+      if (options.json) {
+        console.log(JSON.stringify(reserved, null, 2));
+        return;
+      }
       
       console.log(chalk.green(`✓ Port ${port} reserved for "${reserved.projectName}"`));
       

@@ -11,7 +11,9 @@ export const scanCommand = new Command('scan')
     try {
       const service = new PortService();
       
-      console.log(chalk.gray('Scanning for active ports...'));
+      if (!options.json) {
+        console.log(chalk.gray('Scanning for active ports...'));
+      }
       const activePorts = await service.scanActivePorts();
 
       // Filter by range if specified

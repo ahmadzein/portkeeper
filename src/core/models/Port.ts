@@ -31,6 +31,11 @@ export interface ActivePort {
   processName?: string;
   state?: string;
   address?: string;
+  // Reservation details (if port is reserved)
+  projectName?: string;
+  description?: string;
+  tags?: string[];
+  reservedAt?: Date;
 }
 
 export interface RequestOptions {

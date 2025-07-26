@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Keeper Documentation</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="nav-brand">
+                <span class="logo">🚀</span>
+                <span class="brand-name">Port Keeper Docs</span>
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-home">← Back to Home</a>
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Layout -->
+    <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <h3>Getting Started</h3>
+                    <ul>
+                        <li><a href="#overview" class="active">Overview</a></li>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#quick-start">Quick Start</a></li>
+                        <li><a href="#concepts">Core Concepts</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>CLI Commands</h3>
+                    <ul>
+                        <li><a href="#cli-check">check</a></li>
+                        <li><a href="#cli-reserve">reserve</a></li>
+                        <li><a href="#cli-release">release</a></li>
+                        <li><a href="#cli-list">list</a></li>
+                        <li><a href="#cli-scan">scan</a></li>
+                        <li><a href="#cli-kill">kill</a></li>
+                        <li><a href="#cli-request">request</a></li>
+                        <li><a href="#cli-export">export</a></li>
+                        <li><a href="#cli-import">import</a></li>
+                        <li><a href="#cli-gui">gui</a></li>
+                        <li><a href="#cli-ai">ai</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>GUI Features</h3>
+                    <ul>
+                        <li><a href="#gui-dashboard">Dashboard</a></li>
+                        <li><a href="#gui-active-ports">Active Ports</a></li>
+                        <li><a href="#gui-reservations">Reservations</a></li>
+                        <li><a href="#gui-shortcuts">Keyboard Shortcuts</a></li>
+                        <li><a href="#gui-themes">Themes</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Advanced Topics</h3>
+                    <ul>
+                        <li><a href="#automation">Automation & Scripting</a></li>
+                        <li><a href="#ai-integration">AI Agent Integration</a></li>
+                        <li><a href="#json-api">JSON API Reference</a></li>
+                        <li><a href="#team-workflows">Team Workflows</a></li>
+                        <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Reference</h3>
+                    <ul>
+                        <li><a href="#exit-codes">Exit Codes</a></li>
+                        <li><a href="#error-codes">Error Codes</a></li>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#database">Database Schema</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-main">
+            <div class="docs-content">
+                <!-- Overview Section -->
+                <section id="overview" class="doc-section">
+                    <h1>Port Keeper Documentation</h1>
+                    <p class="lead">Port Keeper is a comprehensive tool for managing local development ports, preventing conflicts, and enabling team collaboration.</p>
+                    
+                    <div class="feature-highlights">
+                        <div class="highlight-card">
+                            <h3>🔍 Smart Port Detection</h3>
+                            <p>Automatically detects which ports are in use and by which processes</p>
+                        </div>
+                        <div class="highlight-card">
+                            <h3>📌 Port Reservation System</h3>
+                            <p>Reserve ports for specific projects to avoid conflicts</p>
+                        </div>
+                        <div class="highlight-card">
+                            <h3>🤝 Team Collaboration</h3>
+                            <p>Export and share port configurations with your team</p>
+                        </div>
+                    </div>
+
+                    <h2>Why Port Keeper?</h2>
+                    <p>Managing ports in development environments can be challenging:</p>
+                    <ul>
+                        <li>Port conflicts when running multiple services</li>
+                        <li>Team members using the same ports for different projects</li>
+                        <li>Difficulty tracking which ports are used by which projects</li>
+                        <li>Manual process killing when ports are stuck</li>
+                    </ul>
+                    <p>Port Keeper solves these problems with an intelligent reservation system and comprehensive management tools.</p>
+                </section>
+
+                <!-- Installation Section -->
+                <section id="installation" class="doc-section">
+                    <h1>Installation</h1>
+                    
+                    <h2>Requirements</h2>
+                    <ul>
+                        <li>Node.js 14.0.0 or higher</li>
+                        <li>npm or yarn</li>
+                        <li>macOS, Linux, or Windows</li>
+                    </ul>
+
+                    <h2>Global Installation (Recommended)</h2>
+                    <div class="code-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-button active" data-tab="npm">npm</button>
+                            <button class="tab-button" data-tab="yarn">yarn</button>
+                            <button class="tab-button" data-tab="pnpm">pnpm</button>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="npm">
+                                <pre><code class="language-bash">npm install -g portkeeper</code></pre>
+                            </div>
+                            <div class="tab-pane" id="yarn">
+                                <pre><code class="language-bash">yarn global add portkeeper</code></pre>
+                            </div>
+                            <div class="tab-pane" id="pnpm">
+                                <pre><code class="language-bash">pnpm add -g portkeeper</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Install from Source</h2>
+                    <pre><code class="language-bash">git clone https://github.com/ahmadzein/portkeeper.git
+cd portkeeper
+npm install
+npm link</code></pre>
+
+                    <h2>Verify Installation</h2>
+                    <pre><code class="language-bash">portman --version
+# Output: 1.0.0
+
+portman --help
+# Shows all available commands</code></pre>
+
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> On macOS/Linux, you might need to use <code>sudo</code> for global installation.
+                    </div>
+                </section>
+
+                <!-- Quick Start Section -->
+                <section id="quick-start" class="doc-section">
+                    <h1>Quick Start</h1>
+                    
+                    <h2>Basic Workflow</h2>
+                    <ol class="steps">
+                        <li>
+                            <h3>Check if a port is available</h3>
+                            <pre><code class="language-bash">portman check 3000</code></pre>
+                        </li>
+                        <li>
+                            <h3>Reserve the port for your project</h3>
+                            <pre><code class="language-bash">portman reserve 3000 -n "my-api" -d "API server"</code></pre>
+                        </li>
+                        <li>
+                            <h3>Start your development server</h3>
+                            <pre><code class="language-bash">npm run dev # Your server runs on port 3000</code></pre>
+                        </li>
+                        <li>
+                            <h3>Release the port when done</h3>
+                            <pre><code class="language-bash">portman release 3000</code></pre>
+                        </li>
+                    </ol>
+
+                    <h2>GUI Quick Start</h2>
+                    <pre><code class="language-bash"># Launch the desktop application
+portman gui</code></pre>
+                    <p>The GUI provides a visual interface for all port management tasks.</p>
+                </section>
+
+                <!-- Core Concepts Section -->
+                <section id="concepts" class="doc-section">
+                    <h1>Core Concepts</h1>
+                    
+                    <h2>Port States</h2>
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <h3>🟢 Free</h3>
+                            <p>Port is available and not in use by any process</p>
+                        </div>
+                        <div class="concept-card">
+                            <h3>🟡 Reserved</h3>
+                            <p>Port is reserved for a project but not currently active</p>
+                        </div>
+                        <div class="concept-card">
+                            <h3>🔴 In Use</h3>
+                            <p>Port is actively being used by a running process</p>
+                        </div>
+                    </div>
+
+                    <h2>Reservation System</h2>
+                    <p>Port Keeper uses a SQLite database to track port reservations:</p>
+                    <ul>
+                        <li><strong>Project Name:</strong> Identifies which project owns the port</li>
+                        <li><strong>Description:</strong> Optional details about port usage</li>
+                        <li><strong>Tags:</strong> Categorize ports (e.g., frontend, backend, database)</li>
+                        <li><strong>Auto-release:</strong> Automatically release when process exits</li>
+                    </ul>
+
+                    <h2>Port Scanning</h2>
+                    <p>Port Keeper uses platform-specific commands to detect active ports:</p>
+                    <ul>
+                        <li><strong>macOS/Linux:</strong> Uses <code>lsof</code> command</li>
+                        <li><strong>Windows:</strong> Uses <code>netstat</code> command</li>
+                    </ul>
+                </section>
+
+                <!-- CLI Commands -->
+                <section id="cli-check" class="doc-section">
+                    <h1>check Command</h1>
+                    <p class="command-description">Check the status of a specific port.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman check &lt;port&gt; [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;port&gt;</code></td>
+                            <td>Port number to check (1-65535)</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Check if port is free</h3>
+                        <pre><code class="language-bash">portman check 3000
+# Output: ✓ Port 3000 is free</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Check reserved port</h3>
+                        <pre><code class="language-bash">portman check 3000
+# Output: ⚠ Port 3000 is reserved for "my-api"
+#         Description: API server</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Check port in use</h3>
+                        <pre><code class="language-bash">portman check 3000
+# Output: ✗ Port 3000 is in use (PID: 12345, Process: node)</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>JSON output</h3>
+                        <pre><code class="language-bash">portman check 3000 --json
+# Output:
+{
+  "port": 3000,
+  "status": "reserved",
+  "projectName": "my-api",
+  "description": "API server"
+}</code></pre>
+                    </div>
+
+                    <h2>Exit Codes</h2>
+                    <ul>
+                        <li><code>0</code> - Port is free</li>
+                        <li><code>1</code> - Port is reserved or in use</li>
+                        <li><code>2</code> - Invalid port number</li>
+                    </ul>
+                </section>
+
+                <section id="cli-reserve" class="doc-section">
+                    <h1>reserve Command</h1>
+                    <p class="command-description">Reserve a port for a specific project.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman reserve &lt;port&gt; [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;port&gt;</code></td>
+                            <td>Port number to reserve (1-65535)</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--name &lt;name&gt;</code></td>
+                            <td><code>-n</code></td>
+                            <td>Project name</td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td><code>--description &lt;desc&gt;</code></td>
+                            <td><code>-d</code></td>
+                            <td>Port description</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--tags &lt;tags&gt;</code></td>
+                            <td><code>-t</code></td>
+                            <td>Comma-separated tags</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--auto-release</code></td>
+                            <td><code>-a</code></td>
+                            <td>Auto-release when process exits</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Basic reservation</h3>
+                        <pre><code class="language-bash">portman reserve 3000 -n "my-api"
+# Output: ✓ Port 3000 reserved for "my-api"</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>With description</h3>
+                        <pre><code class="language-bash">portman reserve 3000 -n "my-api" -d "Main API server"
+# Output: ✓ Port 3000 reserved for "my-api"
+#         Description: Main API server</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>With tags</h3>
+                        <pre><code class="language-bash">portman reserve 3000 -n "my-api" -t "backend,production"
+# Output: ✓ Port 3000 reserved for "my-api"
+#         Tags: backend, production</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Auto-release option</h3>
+                        <pre><code class="language-bash">portman reserve 3000 -n "test-server" -a
+# Output: ✓ Port 3000 reserved for "test-server" (auto-release enabled)</code></pre>
+                    </div>
+
+                    <h2>Error Handling</h2>
+                    <ul>
+                        <li><strong>Port already in use:</strong> Cannot reserve a port that's actively being used</li>
+                        <li><strong>Port already reserved:</strong> Cannot reserve a port that's already reserved</li>
+                        <li><strong>Invalid port:</strong> Port must be between 1 and 65535</li>
+                    </ul>
+                </section>
+
+                <section id="cli-release" class="doc-section">
+                    <h1>release Command</h1>
+                    <p class="command-description">Release one or more reserved ports.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman release &lt;ports...&gt; [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;ports...&gt;</code></td>
+                            <td>One or more port numbers to release</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Release single port</h3>
+                        <pre><code class="language-bash">portman release 3000
+# Output: ✓ Port 3000 released</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Release multiple ports</h3>
+                        <pre><code class="language-bash">portman release 3000 3001 3002
+# Output: ✓ Port 3000 released
+#         ✓ Port 3001 released
+#         ✓ Port 3002 released
+#         
+#         Summary: 3 released, 0 failed</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Mixed results</h3>
+                        <pre><code class="language-bash">portman release 3000 3001 3002
+# Output: ✓ Port 3000 released
+#         ✗ Port 3001 not found or not reserved
+#         ✓ Port 3002 released
+#         
+#         Summary: 2 released, 1 failed</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>JSON output</h3>
+                        <pre><code class="language-bash">portman release 3000 3001 --json
+# Output:
+{
+  "results": [
+    {"port": 3000, "status": "success"},
+    {"port": 3001, "status": "error", "error": "Port not reserved"}
+  ]
+}</code></pre>
+                    </div>
+                </section>
+
+                <section id="cli-list" class="doc-section">
+                    <h1>list Command</h1>
+                    <p class="command-description">List all reserved and in-use ports.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman list [options]</code></pre>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--status &lt;status&gt;</code></td>
+                            <td><code>-s</code></td>
+                            <td>Filter by status (reserved/in-use)</td>
+                            <td>all</td>
+                        </tr>
+                        <tr>
+                            <td><code>--project &lt;name&gt;</code></td>
+                            <td><code>-p</code></td>
+                            <td>Filter by project name (partial match)</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--tags &lt;tags&gt;</code></td>
+                            <td><code>-t</code></td>
+                            <td>Filter by tags</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>List all ports</h3>
+                        <pre><code class="language-bash">portman list
+# Output:
+Port  Project     Status    Description         Reserved At           
+──────────────────────────────────────────────────────────────────────
+3000  my-api      in-use    API server          26/07/2025, 10:00:00  
+3001  frontend    reserved  React dev server    26/07/2025, 09:30:00  
+8080  admin-ui    reserved  Admin dashboard     25/07/2025, 14:20:00</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Filter by status</h3>
+                        <pre><code class="language-bash">portman list -s reserved
+# Shows only reserved ports</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Filter by project</h3>
+                        <pre><code class="language-bash">portman list -p api
+# Shows ports for projects containing "api"</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Filter by tags</h3>
+                        <pre><code class="language-bash">portman list -t backend
+# Shows ports tagged with "backend"</code></pre>
+                    </div>
+                </section>
+
+                <section id="cli-scan" class="doc-section">
+                    <h1>scan Command</h1>
+                    <p class="command-description">Scan for all active ports on the system.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman scan [options]</code></pre>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Basic scan</h3>
+                        <pre><code class="language-bash">portman scan
+# Output:
+Scanning for active ports...
+
+Found 15 active port(s):
+
+Port   PID    Process      Project
+────────────────────────────────────
+3000   12345  node         my-api
+3001   12346  node         -
+5432   1234   postgres     -
+6379   2345   redis-server -
+8080   3456   java         -</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>JSON output for automation</h3>
+                        <pre><code class="language-bash">portman scan --json
+# Output:
+[
+  {
+    "number": 3000,
+    "pid": 12345,
+    "processName": "node",
+    "state": "LISTEN",
+    "address": "127.0.0.1",
+    "projectName": "my-api",
+    "description": "API server"
+  },
+  {
+    "number": 3001,
+    "pid": 12346,
+    "processName": "node",
+    "state": "LISTEN"
+  }
+]</code></pre>
+                    </div>
+
+                    <h2>Platform Differences</h2>
+                    <ul>
+                        <li><strong>macOS/Linux:</strong> Uses <code>lsof -i -P -n | grep LISTEN</code></li>
+                        <li><strong>Windows:</strong> Uses <code>netstat -ano | findstr LISTENING</code></li>
+                    </ul>
+                </section>
+
+                <section id="cli-kill" class="doc-section">
+                    <h1>kill Command</h1>
+                    <p class="command-description">Kill the process using a specific port.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman kill &lt;ports...&gt; [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;ports...&gt;</code></td>
+                            <td>One or more port numbers</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--force</code></td>
+                            <td><code>-f</code></td>
+                            <td>Skip confirmation prompt</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Kill single process</h3>
+                        <pre><code class="language-bash">portman kill 3000
+# Output: 
+Killing process on port 3000...
+✓ Process on port 3000 killed (PID: 12345)</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Kill multiple processes</h3>
+                        <pre><code class="language-bash">portman kill 3000 3001 3002
+# Output:
+✓ Process on port 3000 killed
+✓ Process on port 3001 killed
+✗ No process found on port 3002
+
+Summary: 2 killed, 1 failed</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Force kill without confirmation</h3>
+                        <pre><code class="language-bash">portman kill 3000 -f
+# Kills immediately without asking</code></pre>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <strong>Warning:</strong> Killing processes may cause data loss. Always save your work before killing a process.
+                    </div>
+                </section>
+
+                <section id="cli-request" class="doc-section">
+                    <h1>request Command</h1>
+                    <p class="command-description">Request and reserve multiple available ports.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman request &lt;count&gt; [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;count&gt;</code></td>
+                            <td>Number of ports to request</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--name &lt;name&gt;</code></td>
+                            <td><code>-n</code></td>
+                            <td>Project name</td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td><code>--description &lt;desc&gt;</code></td>
+                            <td><code>-d</code></td>
+                            <td>Description for the ports</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--tags &lt;tags&gt;</code></td>
+                            <td><code>-t</code></td>
+                            <td>Comma-separated tags</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--sequential</code></td>
+                            <td><code>-s</code></td>
+                            <td>Find sequential ports</td>
+                            <td>true</td>
+                        </tr>
+                        <tr>
+                            <td><code>--random</code></td>
+                            <td><code>-r</code></td>
+                            <td>Find random ports</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td><code>--start &lt;port&gt;</code></td>
+                            <td>-</td>
+                            <td>Start port for search</td>
+                            <td>3000</td>
+                        </tr>
+                        <tr>
+                            <td><code>--end &lt;port&gt;</code></td>
+                            <td>-</td>
+                            <td>End port for search</td>
+                            <td>9999</td>
+                        </tr>
+                        <tr>
+                            <td><code>--avoid &lt;ports&gt;</code></td>
+                            <td>-</td>
+                            <td>Comma-separated ports to avoid</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Request sequential ports</h3>
+                        <pre><code class="language-bash">portman request 3 -n "microservices"
+# Output:
+🔍 Searching for 3 available port(s)...
+
+✓ Successfully reserved 3 port(s) for "microservices": 3000, 3001, 3002
+
+Reserved Ports:
+  • Port 3000: microservices-1
+  • Port 3001: microservices-2
+  • Port 3002: microservices-3</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Request random ports</h3>
+                        <pre><code class="language-bash">portman request 5 -n "test-suite" -r
+# Finds 5 random available ports</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Custom port range</h3>
+                        <pre><code class="language-bash">portman request 2 -n "api" --start 8000 --end 8999
+# Searches only between ports 8000-8999</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Avoid specific ports</h3>
+                        <pre><code class="language-bash">portman request 3 -n "app" --avoid "3000,3001,8080"
+# Will not use ports 3000, 3001, or 8080</code></pre>
+                    </div>
+                </section>
+
+                <section id="cli-export" class="doc-section">
+                    <h1>export Command</h1>
+                    <p class="command-description">Export port configuration to JSON.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman export [options]</code></pre>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--output &lt;file&gt;</code></td>
+                            <td><code>-o</code></td>
+                            <td>Output to file instead of stdout</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>--pretty</code></td>
+                            <td><code>-p</code></td>
+                            <td>Pretty print JSON</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Export to stdout</h3>
+                        <pre><code class="language-bash">portman export
+# Outputs JSON to console</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Export to file</h3>
+                        <pre><code class="language-bash">portman export -o ports-backup.json
+# Output: ✓ Exported 12 ports to ports-backup.json</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Pretty print</h3>
+                        <pre><code class="language-bash">portman export -p
+# Output:
+{
+  "version": "1.0.0",
+  "exportDate": "2025-07-26T10:00:00.000Z",
+  "ports": [
+    {
+      "number": 3000,
+      "projectName": "my-api",
+      "description": "API server",
+      "tags": ["backend"],
+      "reservedAt": "2025-07-26T09:00:00.000Z"
+    }
+  ]
+}</code></pre>
+                    </div>
+                </section>
+
+                <section id="cli-import" class="doc-section">
+                    <h1>import Command</h1>
+                    <p class="command-description">Import port configuration from JSON.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman import [file] [options]</code></pre>
+
+                    <h2>Arguments</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Argument</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                        <tr>
+                            <td><code>[file]</code></td>
+                            <td>JSON file to import (or stdin if omitted)</td>
+                            <td>No</td>
+                        </tr>
+                    </table>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                        <tr>
+                            <td><code>--force</code></td>
+                            <td><code>-f</code></td>
+                            <td>Skip already reserved ports</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format</td>
+                            <td>false</td>
+                        </tr>
+                    </table>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Import from file</h3>
+                        <pre><code class="language-bash">portman import ports-backup.json
+# Output:
+Importing from export version 1.0.0
+Export date: 26/07/2025, 10:00:00
+Ports to import: 12
+
+✓ Imported port 3000 for my-api
+✓ Imported port 3001 for frontend
+⚠ Skipping port 3002 (already reserved)
+✗ Cannot import port 8080 (currently in use)
+
+Import complete: 10 imported, 1 skipped, 1 error</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Import from stdin</h3>
+                        <pre><code class="language-bash">cat backup.json | portman import</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Force import</h3>
+                        <pre><code class="language-bash">portman import backup.json -f
+# Skips conflicting ports without errors</code></pre>
+                    </div>
+                </section>
+
+                <section id="cli-gui" class="doc-section">
+                    <h1>gui Command</h1>
+                    <p class="command-description">Launch the Port Keeper desktop application.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman gui</code></pre>
+
+                    <h2>Description</h2>
+                    <p>Launches the Electron-based GUI application that provides a visual interface for all port management tasks.</p>
+
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Visual port dashboard</li>
+                        <li>Real-time port scanning</li>
+                        <li>Drag-and-drop import</li>
+                        <li>Dark/Light theme support</li>
+                        <li>Keyboard shortcuts</li>
+                    </ul>
+
+                    <h2>Example</h2>
+                    <pre><code class="language-bash">portman gui
+# Output: 🚀 Launching Port Keeper GUI...</code></pre>
+
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> The GUI requires a graphical environment. Use CLI commands for headless servers.
+                    </div>
+                </section>
+
+                <section id="cli-ai" class="doc-section">
+                    <h1>ai Command</h1>
+                    <p class="command-description">Display AI agent instructions and integration guide.</p>
+
+                    <h2>Syntax</h2>
+                    <pre><code class="language-bash">portman ai [options]</code></pre>
+
+                    <h2>Options</h2>
+                    <table class="options-table">
+                        <tr>
+                            <th>Option</th>
+                            <th>Alias</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code>--json</code></td>
+                            <td>-</td>
+                            <td>Output in JSON format for machine processing</td>
+                        </tr>
+                    </table>
+
+                    <h2>Description</h2>
+                    <p>The <code>ai</code> command provides comprehensive instructions for AI agents and automation tools to interact with Port Keeper. It supports two output modes:</p>
+                    <ul>
+                        <li><strong>Human-readable:</strong> Formatted guide with examples and best practices</li>
+                        <li><strong>JSON:</strong> Complete command schema for programmatic access</li>
+                    </ul>
+
+                    <h2>Examples</h2>
+                    <div class="example-group">
+                        <h3>Display human-readable guide</h3>
+                        <pre><code class="language-bash">portman ai
+# Output:
+# 🤖 Port Keeper - AI Agent Integration Guide
+# 
+# PURPOSE:
+# Port Keeper helps manage local development ports...
+# 
+# KEY CAPABILITIES:
+# • Check port availability and status
+# • Reserve ports for specific projects
+# ...</code></pre>
+                    </div>
+
+                    <div class="example-group">
+                        <h3>Get JSON schema for automation</h3>
+                        <pre><code class="language-bash">portman ai --json
+# Output:
+{
+  "name": "Port Keeper",
+  "version": "1.0.0",
+  "description": "A comprehensive tool for managing local development ports",
+  "capabilities": [
+    "Check port status (free/reserved/in-use)",
+    "Reserve ports for projects",
+    ...
+  ],
+  "commands": {
+    "check": {
+      "syntax": "portman check <port> [--json]",
+      "description": "Check if a port is free, reserved, or in use",
+      ...
+    }
+  }
+}</code></pre>
+                    </div>
+
+                    <h2>Use Cases</h2>
+                    <ul>
+                        <li>AI coding assistants learning Port Keeper commands</li>
+                        <li>Generating automation scripts</li>
+                        <li>Building integrations with Port Keeper</li>
+                        <li>Creating documentation for team members</li>
+                    </ul>
+
+                    <div class="alert alert-tip">
+                        <strong>Tip:</strong> Use <code>portman ai --json | jq '.commands'</code> to explore specific command schemas.
+                    </div>
+                </section>
+
+                <!-- GUI Sections -->
+                <section id="gui-dashboard" class="doc-section">
+                    <h1>GUI Dashboard</h1>
+                    <p>The main dashboard provides an overview of all reserved ports.</p>
+
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Table view of all reserved ports</li>
+                        <li>Search and filter capabilities</li>
+                        <li>Quick actions: Check, Release, Kill</li>
+                        <li>Sort by any column</li>
+                        <li>Bulk selection and operations</li>
+                    </ul>
+
+                    <h2>Table Columns</h2>
+                    <ul>
+                        <li><strong>Port:</strong> Port number</li>
+                        <li><strong>Project:</strong> Project name</li>
+                        <li><strong>Status:</strong> Reserved or In Use</li>
+                        <li><strong>PID:</strong> Process ID (if active)</li>
+                        <li><strong>Description:</strong> Port description</li>
+                        <li><strong>Reserved At:</strong> Reservation timestamp</li>
+                        <li><strong>Actions:</strong> Quick action buttons</li>
+                    </ul>
+                </section>
+
+                <section id="gui-active-ports" class="doc-section">
+                    <h1>Active Ports View</h1>
+                    <p>Real-time view of all active ports on the system.</p>
+
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Live scanning of active ports</li>
+                        <li>Shows process information</li>
+                        <li>Highlights managed vs unmanaged ports</li>
+                        <li>Kill processes directly</li>
+                        <li>Reserve unmanaged ports</li>
+                    </ul>
+
+                    <h2>Port Information</h2>
+                    <ul>
+                        <li><strong>Green:</strong> Managed by Port Keeper</li>
+                        <li><strong>Yellow:</strong> System or third-party process</li>
+                        <li><strong>Red:</strong> Potentially conflicting port</li>
+                    </ul>
+                </section>
+
+                <section id="gui-shortcuts" class="doc-section">
+                    <h1>Keyboard Shortcuts</h1>
+                    <p>Keyboard shortcuts for efficient port management.</p>
+
+                    <h2>Global Shortcuts</h2>
+                    <table class="shortcuts-table">
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + N</kbd></td>
+                            <td>New Reservation</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + R</kbd></td>
+                            <td>Refresh List</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + F</kbd></td>
+                            <td>Focus Search</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + S</kbd></td>
+                            <td>Scan Active Ports</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + E</kbd></td>
+                            <td>Export Configuration</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + I</kbd></td>
+                            <td>Import Configuration</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Cmd/Ctrl + ,</kbd></td>
+                            <td>Open Settings</td>
+                        </tr>
+                    </table>
+
+                    <h2>Table Shortcuts</h2>
+                    <table class="shortcuts-table">
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td><kbd>Space</kbd></td>
+                            <td>Select/Deselect Row</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Delete</kbd></td>
+                            <td>Release Selected Ports</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Enter</kbd></td>
+                            <td>View Port Details</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <!-- Advanced Topics -->
+                <section id="automation" class="doc-section">
+                    <h1>Automation & Scripting</h1>
+                    <p>Port Keeper is designed for automation with comprehensive JSON support.</p>
+
+                    <h2>Shell Scripts</h2>
+                    <div class="example-group">
+                        <h3>Port allocation script</h3>
+                        <pre><code class="language-bash">#!/bin/bash
+# allocate-ports.sh
+
+PROJECT="my-app"
+PORTS_NEEDED=3
+
+# Request ports
+RESULT=$(portman request $PORTS_NEEDED -n "$PROJECT" --json)
+PORTS=$(echo $RESULT | jq -r '.ports[].number' | tr '\n' ' ')
+
+# Export as environment variables
+export API_PORT=$(echo $PORTS | awk '{print $1}')
+export WEB_PORT=$(echo $PORTS | awk '{print $2}')
+export ADMIN_PORT=$(echo $PORTS | awk '{print $3}')
+
+echo "Allocated ports: API=$API_PORT, WEB=$WEB_PORT, ADMIN=$ADMIN_PORT"
+
+# Start services
+npm run start:api -- --port $API_PORT &
+npm run start:web -- --port $WEB_PORT &
+npm run start:admin -- --port $ADMIN_PORT &
+
+# Cleanup on exit
+trap "portman release $PORTS" EXIT
+wait</code></pre>
+                    </div>
+
+                    <h2>Docker Integration</h2>
+                    <div class="example-group">
+                        <h3>Dynamic port allocation for containers</h3>
+                        <pre><code class="language-bash">#!/bin/bash
+# docker-ports.sh
+
+# Request port for container
+PORT_JSON=$(portman request 1 -n "docker-$1" --json)
+PORT=$(echo $PORT_JSON | jq -r '.ports[0].number')
+
+# Run container with allocated port
+docker run -d \
+  --name "$1" \
+  -p "$PORT:80" \
+  -e "EXTERNAL_PORT=$PORT" \
+  "$2"
+
+echo "Container $1 running on port $PORT"</code></pre>
+                    </div>
+
+                    <h2>CI/CD Integration</h2>
+                    <div class="example-group">
+                        <h3>GitHub Actions</h3>
+                        <pre><code class="language-yaml">name: Integration Tests
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install Port Keeper
+        run: npm install -g portkeeper
+      
+      - name: Allocate Test Ports
+        id: ports
+        run: |
+          PORTS=$(portman request 3 -n "ci-${{ github.run_id }}" --json)
+          echo "::set-output name=ports::$PORTS"
+          echo "API_PORT=$(echo $PORTS | jq -r '.ports[0].number')" >> $GITHUB_ENV
+          echo "DB_PORT=$(echo $PORTS | jq -r '.ports[1].number')" >> $GITHUB_ENV
+          echo "REDIS_PORT=$(echo $PORTS | jq -r '.ports[2].number')" >> $GITHUB_ENV
+      
+      - name: Run Tests
+        run: |
+          npm test
+      
+      - name: Cleanup Ports
+        if: always()
+        run: |
+          NUMBERS=$(echo '${{ steps.ports.outputs.ports }}' | jq -r '.ports[].number' | tr '\n' ' ')
+          portman release $NUMBERS</code></pre>
+                    </div>
+                </section>
+
+                <section id="ai-integration" class="doc-section">
+                    <h1>AI Agent Integration</h1>
+                    <p>Port Keeper provides JSON output for seamless AI agent integration.</p>
+
+                    <h2>Python Example</h2>
+                    <pre><code class="language-python">import subprocess
+import json
+import sys
+
+class PortManager:
+    def __init__(self):
+        self.command_base = ['portman']
+    
+    def execute(self, args):
+        """Execute portman command and return JSON result"""
+        cmd = self.command_base + args + ['--json']
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            return json.loads(result.stdout)
+        except subprocess.CalledProcessError as e:
+            return {'error': e.stderr, 'code': e.returncode}
+    
+    def check_port(self, port):
+        """Check if a port is available"""
+        return self.execute(['check', str(port)])
+    
+    def reserve_port(self, port, project, description=None, tags=None):
+        """Reserve a port for a project"""
+        args = ['reserve', str(port), '-n', project]
+        if description:
+            args.extend(['-d', description])
+        if tags:
+            args.extend(['-t', ','.join(tags)])
+        return self.execute(args)
+    
+    def request_ports(self, count, project, **kwargs):
+        """Request multiple ports"""
+        args = ['request', str(count), '-n', project]
+        for key, value in kwargs.items():
+            if value is not None:
+                args.extend([f'--{key}', str(value)])
+        return self.execute(args)
+    
+    def list_ports(self, status=None, project=None):
+        """List ports with optional filters"""
+        args = ['list']
+        if status:
+            args.extend(['-s', status])
+        if project:
+            args.extend(['-p', project])
+        return self.execute(args)
+
+# Usage example
+pm = PortManager()
+
+# Check if port is free
+status = pm.check_port(3000)
+if status.get('status') == 'free':
+    # Reserve it
+    result = pm.reserve_port(3000, 'my-api', 'API Server', ['backend', 'prod'])
+    print(f"Reserved: {result}")
+
+# Request multiple ports
+ports = pm.request_ports(5, 'microservices', sequential=True, start=4000)
+print(f"Allocated ports: {[p['number'] for p in ports.get('ports', [])]}")
+
+# List all reserved ports
+all_ports = pm.list_ports(status='reserved')
+for port in all_ports:
+    print(f"Port {port['number']}: {port['projectName']}")</code></pre>
+
+                    <h2>Node.js Example</h2>
+                    <pre><code class="language-javascript">const { exec } = require('child_process');
+const util = require('util');
+const execPromise = util.promisify(exec);
+
+class PortManager {
+    async execute(command) {
+        try {
+            const { stdout } = await execPromise(`portman ${command} --json`);
+            return JSON.parse(stdout);
+        } catch (error) {
+            throw new Error(`Command failed: ${error.message}`);
+        }
+    }
+
+    async checkPort(port) {
+        return this.execute(`check ${port}`);
+    }
+
+    async reservePort(port, project, options = {}) {
+        let cmd = `reserve ${port} -n "${project}"`;
+        if (options.description) cmd += ` -d "${options.description}"`;
+        if (options.tags) cmd += ` -t "${options.tags.join(',')}"`;
+        return this.execute(cmd);
+    }
+
+    async requestPorts(count, project, options = {}) {
+        let cmd = `request ${count} -n "${project}"`;
+        Object.entries(options).forEach(([key, value]) => {
+            if (value !== undefined) cmd += ` --${key} ${value}`;
+        });
+        return this.execute(cmd);
+    }
+
+    async listPorts(filters = {}) {
+        let cmd = 'list';
+        if (filters.status) cmd += ` -s ${filters.status}`;
+        if (filters.project) cmd += ` -p "${filters.project}"`;
+        return this.execute(cmd);
+    }
+
+    async releasePorts(...ports) {
+        return this.execute(`release ${ports.join(' ')}`);
+    }
+}
+
+// Usage
+const pm = new PortManager();
+
+async function allocatePorts() {
+    try {
+        // Check port availability
+        const status = await pm.checkPort(3000);
+        console.log('Port 3000 status:', status.status);
+
+        // Request multiple ports
+        const result = await pm.requestPorts(3, 'my-service', {
+            sequential: true,
+            start: 4000
+        });
+        
+        const ports = result.ports.map(p => p.number);
+        console.log('Allocated ports:', ports);
+
+        // Do something with the ports...
+
+        // Release when done
+        await pm.releasePorts(...ports);
+        console.log('Ports released');
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
+allocatePorts();</code></pre>
+                </section>
+
+                <section id="json-api" class="doc-section">
+                    <h1>JSON API Reference</h1>
+                    <p>Complete reference for JSON responses from all commands.</p>
+
+                    <h2>Response Structures</h2>
+                    
+                    <h3>Port Object</h3>
+                    <pre><code class="language-typescript">interface Port {
+  number: number;
+  projectName: string;
+  description?: string;
+  status: "reserved" | "in-use";
+  pid?: number;
+  reservedAt: string;  // ISO 8601
+  lastUsed?: string;   // ISO 8601
+  autoRelease: boolean;
+  tags: string[];
+}</code></pre>
+
+                    <h3>Active Port Object</h3>
+                    <pre><code class="language-typescript">interface ActivePort {
+  number: number;
+  pid: number;
+  processName?: string;
+  state?: string;
+  address?: string;
+  // If managed by Port Keeper:
+  projectName?: string;
+  description?: string;
+  tags?: string[];
+  reservedAt?: string;
+}</code></pre>
+
+                    <h3>Check Response</h3>
+                    <pre><code class="language-typescript">interface CheckResponse {
+  port: number;
+  status: "free" | "reserved" | "in-use";
+  // If reserved:
+  projectName?: string;
+  description?: string;
+  // If in use:
+  pid?: number;
+  processName?: string;
+}</code></pre>
+
+                    <h3>Request Response</h3>
+                    <pre><code class="language-typescript">interface RequestResponse {
+  ports: Port[];
+  summary: string;
+}</code></pre>
+
+                    <h3>Operation Result</h3>
+                    <pre><code class="language-typescript">interface OperationResult {
+  port: number;
+  status: "success" | "error";
+  error?: string;
+  pid?: number;  // For kill command
+}</code></pre>
+
+                    <h3>Import Response</h3>
+                    <pre><code class="language-typescript">interface ImportResponse {
+  imported: number;
+  skipped: number;
+  errors: number;
+  total: number;
+}</code></pre>
+
+                    <h2>Error Responses</h2>
+                    <p>When an error occurs, the process exits with a non-zero code and outputs error to stderr:</p>
+                    <pre><code class="language-json">{
+  "error": "Port 3000 is already in use",
+  "code": "PORT_IN_USE",
+  "details": {
+    "port": 3000,
+    "pid": 12345,
+    "process": "node"
+  }
+}</code></pre>
+                </section>
+
+                <section id="troubleshooting" class="doc-section">
+                    <h1>Troubleshooting</h1>
+                    <p>Common issues and their solutions.</p>
+
+                    <h2>Permission Errors</h2>
+                    <div class="troubleshooting-item">
+                        <h3>Problem</h3>
+                        <p>Error: EACCES: permission denied</p>
+                        
+                        <h3>Solution</h3>
+                        <ul>
+                            <li>Use ports above 1024 (no special permissions required)</li>
+                            <li>Run with sudo for system ports (not recommended)</li>
+                            <li>Configure your system to allow non-root port binding</li>
+                        </ul>
+                    </div>
+
+                    <h2>Module Version Mismatch</h2>
+                    <div class="troubleshooting-item">
+                        <h3>Problem</h3>
+                        <p>Error: NODE_MODULE_VERSION mismatch</p>
+                        
+                        <h3>Solution</h3>
+                        <pre><code class="language-bash"># For CLI usage
+npm run fix:node
+
+# For GUI usage
+npm run fix:electron</code></pre>
+                    </div>
+
+                    <h2>Port Already in Use</h2>
+                    <div class="troubleshooting-item">
+                        <h3>Problem</h3>
+                        <p>Cannot reserve port - already in use</p>
+                        
+                        <h3>Solution</h3>
+                        <ol>
+                            <li>Check what's using the port: <code>portman check 3000</code></li>
+                            <li>Kill the process if safe: <code>portman kill 3000</code></li>
+                            <li>Or choose a different port: <code>portman request 1 -n "my-app"</code></li>
+                        </ol>
+                    </div>
+
+                    <h2>Database Errors</h2>
+                    <div class="troubleshooting-item">
+                        <h3>Problem</h3>
+                        <p>Database is locked or corrupted</p>
+                        
+                        <h3>Solution</h3>
+                        <ul>
+                            <li>Database location: <code>~/.portkeeper/ports.db</code></li>
+                            <li>Back up and remove if corrupted</li>
+                            <li>Port Keeper will create a new database</li>
+                        </ul>
+                    </div>
+
+                    <h2>GUI Won't Launch</h2>
+                    <div class="troubleshooting-item">
+                        <h3>Problem</h3>
+                        <p>GUI fails to start or shows blank window</p>
+                        
+                        <h3>Solution</h3>
+                        <ul>
+                            <li>Ensure GUI is built: <code>npm run build:gui</code></li>
+                            <li>Check for Electron errors in console</li>
+                            <li>Try running in development mode: <code>npm run dev:gui</code></li>
+                            <li>Verify display server on Linux</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile menu toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="docs.js"></script>
+</body>
+</html>
