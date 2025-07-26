@@ -16,11 +16,24 @@ const ScanView: React.FC = () => {
     setIsLoading(true);
     try {
       const ports = await window.portManager.port.scan();
+      console.log('Scanned ports:', ports); // Debug log
+      
+      if (!ports || !Array.isArray(ports)) {
+        console.error('Invalid ports data:', ports);
+        setActivePorts([]);
+        setFilteredPorts([]);
+        message.warning('No active ports found');
+        return;
+      }
+      
       setActivePorts(ports);
       setFilteredPorts(ports);
       message.success(`Found ${ports.length} active ports`);
     } catch (error) {
+      console.error('Scan error:', error);
       message.error(`Scan failed: ${(error as Error).message}`);
+      setActivePorts([]);
+      setFilteredPorts([]);
     } finally {
       setIsLoading(false);
     }

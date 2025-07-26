@@ -232,26 +232,42 @@ export class PortService {
     const lines = output.split('\n').filter(line => line.trim());
 
     for (const line of lines) {
-      if (platform === 'win32') {
-        const match = line.match(/:(\d+)\s+.*LISTENING\s+(\d+)/);
-        if (match) {
-          ports.push({
-            number: parseInt(match[1]!, 10),
-            pid: parseInt(match[2]!, 10),
-          });
-        }
-      } else {
-        const match = line.match(/.*:(\d+)\s+\(LISTEN\)/);
-        if (match) {
-          const pidMatch = line.match(/^\S+\s+(\d+)/);
-          if (pidMatch) {
+      try {
+        if (platform === 'win32') {
+          const match = line.match(/:(\d+)\s+.*LISTENING\s+(\d+)/);
+          if (match) {
             ports.push({
               number: parseInt(match[1]!, 10),
-              pid: parseInt(pidMatch[1]!, 10),
-              processName: line.split(/\s+/)[0],
+              pid: parseInt(match[2]!, 10),
+              processName: 'System',
+              state: 'LISTEN',
             });
           }
+        } else {
+          // macOS/Linux format: command PID user FD type device size/off node name
+          const parts = line.split(/\s+/);
+          if (parts.length >= 9) {
+            const portMatch = parts[8]?.match(/:(\d+)\s*\(LISTEN\)/);
+            if (portMatch) {
+              const port: ActivePort = {
+                number: parseInt(portMatch[1]!, 10),
+                pid: parseInt(parts[1]!, 10),
+                processName: parts[0],
+                state: 'LISTEN',
+              };
+              
+              // Extract address if available
+              const addressMatch = parts[8]?.match(/^([^:]+):(\d+)/);
+              if (addressMatch) {
+                port.address = addressMatch[1];
+              }
+              
+              ports.push(port);
+            }
+          }
         }
+      } catch (error) {
+        console.error('Error parsing line:', line, error);
       }
     }
 
