@@ -15,6 +15,20 @@ const ScanView: React.FC = () => {
   const scanPorts = async () => {
     setIsLoading(true);
     try {
+      // Check if window.portManager exists
+      if (!window.portManager) {
+        console.error('window.portManager is undefined');
+        message.error('Port Manager API not available');
+        return;
+      }
+      
+      if (!window.portManager.port) {
+        console.error('window.portManager.port is undefined');
+        message.error('Port API not available');
+        return;
+      }
+      
+      console.log('Starting port scan...');
       const ports = await window.portManager.port.scan();
       console.log('Scanned ports:', ports); // Debug log
       
@@ -28,10 +42,22 @@ const ScanView: React.FC = () => {
       
       setActivePorts(ports);
       setFilteredPorts(ports);
-      message.success(`Found ${ports.length} active ports`);
+      
+      if (ports.length === 0) {
+        message.info('No active ports found');
+      } else {
+        message.success(`Found ${ports.length} active ports`);
+      }
     } catch (error) {
-      console.error('Scan error:', error);
-      message.error(`Scan failed: ${(error as Error).message}`);
+      console.error('Scan error full details:', {
+        error,
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : 'No stack',
+        type: error?.constructor?.name
+      });
+      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      message.error(`Scan failed: ${errorMessage}`);
       setActivePorts([]);
       setFilteredPorts([]);
     } finally {

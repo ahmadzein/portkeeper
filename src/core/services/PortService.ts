@@ -158,6 +158,8 @@ export class PortService {
     const platform = process.platform;
     let command: string;
 
+    console.log('PortService: Scanning on platform:', platform);
+
     if (platform === 'darwin' || platform === 'linux') {
       command = 'lsof -i -P -n | grep LISTEN';
     } else if (platform === 'win32') {
@@ -167,9 +169,14 @@ export class PortService {
     }
 
     try {
+      console.log('PortService: Executing command:', command);
       const { stdout } = await execAsync(command);
-      return this.parsePortScanOutput(stdout, platform);
+      console.log('PortService: Command output length:', stdout.length);
+      const ports = this.parsePortScanOutput(stdout, platform);
+      console.log('PortService: Parsed ports:', ports.length);
+      return ports;
     } catch (error) {
+      console.error('PortService: Scan error:', error);
       // Command might fail if no ports are listening
       return [];
     }
