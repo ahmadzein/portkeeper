@@ -1,6 +1,10 @@
-# Port Manager 🚀
+# Port Keeper 🚀
 
 A comprehensive port management tool for developers that helps reserve, monitor, and manage local development ports through both CLI and GUI interfaces.
+
+🌐 **Website**: [portkeeper.net](https://portkeeper.net) | [portkeeper.dev](https://portkeeper.dev)
+📦 **npm**: [portkeeper](https://www.npmjs.com/package/portkeeper)
+🐙 **GitHub**: [ahmadzein/portkeeper](https://github.com/ahmadzein/portkeeper)
 
 ## Features
 
@@ -26,9 +30,23 @@ A comprehensive port management tool for developers that helps reserve, monitor,
 
 ## Installation
 
+### Important: Node.js Compatibility
+
+If you encounter a `NODE_MODULE_VERSION` error after installation, please run:
+
+```bash
+npm rebuild -g better-sqlite3
+```
+
+This rebuilds the native module for your specific Node.js version.
+
 ### Via npm
 ```bash
+# CLI only (lightweight)
 npm install -g portkeeper
+
+# CLI + GUI (includes Electron)
+npm install -g portkeeper --include=optional
 
 # Verify installation
 portman --version
@@ -37,18 +55,25 @@ portman --version
 ### From Source
 ```bash
 # Clone the repository
-git clone https://github.com/ahmadzein/portmanager.git
-cd portmanager
+git clone https://github.com/ahmadzein/portkeeper.git
+cd portkeeper
 npm install
 npm run build
 npm link
 ```
 
 ### GUI Application
-The Port Keeper GUI is distributed separately as a desktop application:
-- Download from [releases page](https://github.com/ahmadzein/portkeeper/releases)
-- Or visit [portkeeper.net/download](https://portkeeper.net/download)
-- Run `portman gui` for download information
+The GUI is included with Port Keeper:
+
+```bash
+# Launch the GUI (requires --include=optional during install)
+portman gui
+
+# If GUI not found, install with:
+npm install -g portkeeper --include=optional
+```
+
+Note: The GUI requires Electron (~100MB). Install with `--include=optional` to get GUI support.
 
 ## Quick Start
 
@@ -93,26 +118,6 @@ In the GUI:
 - **Quick Actions**: Reserve, release, or kill processes with one click
 - **Keyboard Shortcuts**: Press `?` to see all shortcuts
 
-## GUI Usage
-
-Launch the GUI application:
-```bash
-portman gui
-```
-
-**Note**: The GUI feature requires the project to be built first. If you encounter native module errors:
-
-For GUI (Electron):
-```bash
-npm run build:gui
-./scripts/fix-native-modules.sh electron
-```
-
-For CLI (Node.js):
-```bash
-./scripts/fix-native-modules.sh
-```
-
 ## Documentation
 
 - 📖 [CLI Command Reference](docs/CLI_COMMAND_REFERENCE.md) - Detailed CLI documentation with examples
@@ -130,8 +135,8 @@ For CLI (Node.js):
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/ahmadzein/portmanager.git
-cd portmanager
+git clone https://github.com/ahmadzein/portkeeper.git
+cd portkeeper
 
 # Install dependencies
 npm install
@@ -154,7 +159,7 @@ npm link
 
 ## Architecture
 
-Port Manager follows a layered architecture with shared core functionality between CLI and GUI:
+Port Keeper follows a layered architecture with shared core functionality between CLI and GUI:
 
 - **Core Layer**: Business logic, models, and services
 - **Data Layer**: SQLite database for persistence
@@ -184,10 +189,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📧 Email: support@portmanager.dev
-- 💬 Discord: [Join our community](https://discord.gg/portmanager)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/portmanager/issues)
+- 🌐 Website: [portkeeper.net](https://portkeeper.net)
+- 📦 npm: [npmjs.com/package/portkeeper](https://www.npmjs.com/package/portkeeper)
+- 🐛 Issues: [GitHub Issues](https://github.com/ahmadzein/portkeeper/issues)
 
 ---
 
-**Port Manager** - Never worry about port conflicts again! 🎉
+**Port Keeper** - Never worry about port conflicts again! 🎉

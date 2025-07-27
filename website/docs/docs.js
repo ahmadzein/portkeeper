@@ -141,14 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.type = 'search';
     searchInput.placeholder = 'Search documentation...';
     searchInput.className = 'docs-search';
-    searchInput.style.cssText = `
-        width: 100%;
-        padding: 0.75rem 1rem;
-        margin: 0 1.5rem 1rem;
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-    `;
+    // Remove inline styles since we have them in CSS now
     
     // Insert search at the top of sidebar
     const sidebarContent = document.querySelector('.sidebar-content');

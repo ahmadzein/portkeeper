@@ -52,3 +52,26 @@ out/
 # Electron
 electron-builder.yml
 !electron-builder.config.js
+
+# Team meeting notes and internal docs
+TEAM_MEETING_*.md
+TEST_*.md
+COMPREHENSIVE_*.md
+PROJECT_*.md
+FINAL_*.md
+RENAME_*.md
+PUBLISH_*.md
+*_SUMMARY.md
+*_FINDINGS*.md
+*_GUIDE.md
+*_PLAN.md
+*_MATRIX.md
+
+# Website build artifacts
+website/website/
+website/fix-favicons.*
+website/generate-favicons.sh
+website/.htaccess*
+
+# Temporary scripts
+scripts/postinstall-simple.js

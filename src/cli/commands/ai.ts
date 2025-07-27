@@ -162,10 +162,10 @@ export const aiCommand = new Command('ai')
     }
 
     // Human-readable output
-    console.log(chalk.blue.bold('\n🤖 Port Manager - AI Agent Integration Guide\n'));
+    console.log(chalk.blue.bold('\n🤖 Port Keeper - AI Agent Integration Guide\n'));
     
     console.log(chalk.yellow('PURPOSE:'));
-    console.log('Port Manager helps manage local development ports to prevent conflicts');
+    console.log('Port Keeper helps manage local development ports to prevent conflicts');
     console.log('and enable team collaboration through port reservation and tracking.\n');
 
     console.log(chalk.yellow('KEY CAPABILITIES:'));

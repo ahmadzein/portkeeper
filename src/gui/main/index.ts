@@ -25,8 +25,8 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow?.show();
-    // Open DevTools in development or when debugging
-    if (is.dev || process.env['DEBUG_ELECTRON']) {
+    // Open DevTools only when explicitly requested
+    if (process.env['ELECTRON_IS_DEV'] === '1' || process.env['DEBUG_ELECTRON']) {
       mainWindow?.webContents.openDevTools();
     }
   });
@@ -37,7 +37,7 @@ function createWindow(): void {
   });
 
   // Load the app
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+  if (process.env['ELECTRON_IS_DEV'] === '1' && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'));

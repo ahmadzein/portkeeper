@@ -1,11 +1,11 @@
 # CLI Command Reference
 
 ## Overview
-Port Manager CLI provides a comprehensive set of commands to manage local development ports. All commands are available through the `portmanager` or `portman` command.
+Port Keeper CLI provides a comprehensive set of commands to manage local development ports. All commands are available through the `portman` command.
 
 ## Global Options
 ```bash
-portmanager [command] [options]
+portman [command] [options]
 
 Options:
   -V, --version     Display version number
@@ -18,9 +18,9 @@ All commands support `--json` flag for machine-readable output, perfect for auto
 
 ```bash
 # Get JSON output from any command
-portmanager check 3000 --json
-portmanager list --json
-portmanager scan --json
+portman check 3000 --json
+portman list --json
+portman scan --json
 ```
 
 ## Commands
@@ -30,7 +30,7 @@ Check if a port is free, reserved, or in use.
 
 **Syntax:**
 ```bash
-portmanager check <port> [options]
+portman check <port> [options]
 ```
 
 **Options:**
@@ -39,22 +39,22 @@ portmanager check <port> [options]
 **Examples:**
 ```bash
 # Check single port
-portmanager check 3000
+portman check 3000
 # Output: Port 3000 is free
 
 # Check reserved port
-portmanager check 8080
+portman check 8080
 # Output: Port 8080 is reserved for project "api-server"
 
 # Check port in use
-portmanager check 5432
+portman check 5432
 # Output: Port 5432 is in use by process "postgres" (PID: 1234)
 
 # JSON output
-portmanager check 3000 --json
+portman check 3000 --json
 # Output: {"port":3000,"status":"free"}
 
-portmanager check 8080 --json
+portman check 8080 --json
 # Output: {"port":8080,"status":"reserved","projectName":"api-server","description":"REST API"}
 ```
 
@@ -63,7 +63,7 @@ Reserve a port for a specific project to prevent conflicts.
 
 **Syntax:**
 ```bash
-portmanager reserve <port> [options]
+portman reserve <port> [options]
 ```
 
 **Options:**
@@ -76,26 +76,26 @@ portmanager reserve <port> [options]
 **Examples:**
 ```bash
 # Basic reservation
-portmanager reserve 3000 --name "my-react-app"
+portman reserve 3000 --name "my-react-app"
 
 # With description
-portmanager reserve 8080 --name "api-server" --desc "Express.js REST API"
+portman reserve 8080 --name "api-server" --desc "Express.js REST API"
 
 # With tags
-portmanager reserve 5000 --name "microservice" --tags docker api production
+portman reserve 5000 --name "microservice" --tags docker api production
 
 # With auto-release
-portmanager reserve 3001 --name "dev-server" --auto-release
+portman reserve 3001 --name "dev-server" --auto-release
 
 # Full example
-portmanager reserve 9000 \
+portman reserve 9000 \
   --name "dashboard" \
   --desc "Admin dashboard with real-time updates" \
   --tags react websocket admin \
   --auto-release
 
 # JSON output
-portmanager reserve 3000 --name "my-app" --json
+portman reserve 3000 --name "my-app" --json
 # Output: {"number":3000,"projectName":"my-app","status":"reserved","reservedAt":"2025-01-26T10:30:00.000Z"}
 ```
 
@@ -104,7 +104,7 @@ Release a previously reserved port.
 
 **Syntax:**
 ```bash
-portmanager release <port> [port2] [port3] ... [options]
+portman release <port> [port2] [port3] ... [options]
 ```
 
 **Options:**
@@ -113,19 +113,19 @@ portmanager release <port> [port2] [port3] ... [options]
 **Examples:**
 ```bash
 # Release single port
-portmanager release 3000
+portman release 3000
 # Output: Released port 3000
 
 # Release multiple ports
-portmanager release 3000 3001 3002
+portman release 3000 3001 3002
 # Output: Released 3 ports: 3000, 3001, 3002
 
 # Attempt to release non-reserved port
-portmanager release 4000
+portman release 4000
 # Output: Error: Port 4000 is not reserved
 
 # JSON output
-portmanager release 3000 3001 --json
+portman release 3000 3001 --json
 # Output: {"results":[{"port":3000,"status":"success"},{"port":3001,"status":"success"}]}
 ```
 
@@ -134,7 +134,7 @@ Display all reserved ports with their details.
 
 **Syntax:**
 ```bash
-portmanager list [options]
+portman list [options]
 ```
 
 **Options:**
@@ -145,20 +145,20 @@ portmanager list [options]
 **Examples:**
 ```bash
 # List all reserved ports
-portmanager list
+portman list
 # Output:
 # Port | Project      | Description          | Status   | Reserved At
 # 3000 | my-react-app | React dev server    | reserved | 2025-01-15 10:30
 # 8080 | api-server   | Express REST API    | in-use   | 2025-01-14 15:45
 
 # Filter by status
-portmanager list --status in-use
+portman list --status in-use
 
 # Filter by project
-portmanager list --project "api"
+portman list --project "api"
 
 # JSON output for scripting
-portmanager list --json
+portman list --json
 # Output: [{"port":3000,"projectName":"my-react-app",...}]
 ```
 
@@ -167,7 +167,7 @@ Scan system for all ports currently in use.
 
 **Syntax:**
 ```bash
-portmanager scan [options]
+portman scan [options]
 ```
 
 **Options:**
@@ -178,7 +178,7 @@ portmanager scan [options]
 **Examples:**
 ```bash
 # Scan all active ports
-portmanager scan
+portman scan
 # Output:
 # Port | PID   | Process      | State  | Address
 # 3000 | 12345 | node         | LISTEN | 127.0.0.1
@@ -186,14 +186,14 @@ portmanager scan
 # 8080 | 54321 | java         | LISTEN | ::1
 
 # Scan with reservation info
-portmanager scan --reserved
+portman scan --reserved
 # Output includes project names for reserved ports
 
 # Scan specific range
-portmanager scan --range 3000-4000
+portman scan --range 3000-4000
 
 # JSON output
-portmanager scan --json
+portman scan --json
 # Output: [{"number":3000,"pid":12345,"processName":"node","state":"LISTEN"},...]
 ```
 
@@ -202,7 +202,7 @@ Terminate the process using a specific port.
 
 **Syntax:**
 ```bash
-portmanager kill <port> [port2] [port3] ... [options]
+portman kill <port> [port2] [port3] ... [options]
 ```
 
 **Options:**
@@ -212,22 +212,22 @@ portmanager kill <port> [port2] [port3] ... [options]
 **Examples:**
 ```bash
 # Kill single process
-portmanager kill 3000
+portman kill 3000
 # Output: Killed process on port 3000 (node, PID: 12345)
 
 # Kill multiple processes
-portmanager kill 3000 3001 8080
+portman kill 3000 3001 8080
 # Output: Killed 3 processes
 
 # Attempt to kill on free port
-portmanager kill 4000
+portman kill 4000
 # Output: Error: No process found on port 4000
 
 # Force kill with sudo (if needed)
-sudo portmanager kill 80
+sudo portman kill 80
 
 # JSON output
-portmanager kill 3000 --json
+portman kill 3000 --json
 # Output: {"results":[{"port":3000,"status":"success"}]}
 ```
 
@@ -236,7 +236,7 @@ Request multiple available ports for a project.
 
 **Syntax:**
 ```bash
-portmanager request <count> [options]
+portman request <count> [options]
 ```
 
 **Arguments:**
@@ -256,25 +256,25 @@ portmanager request <count> [options]
 **Examples:**
 ```bash
 # Request 3 sequential ports
-portmanager request 3 --name "microservices"
+portman request 3 --name "microservices"
 # Output: Reserved ports 3000, 3001, 3002 for "microservices"
 
 # Request random ports
-portmanager request 5 --name "test-suite" --random
+portman request 5 --name "test-suite" --random
 
 # Request with specific range
-portmanager request 4 \
+portman request 4 \
   --name "dev-cluster" \
   --start 8000 \
   --end 8100
 
 # Request avoiding specific ports
-portmanager request 3 \
+portman request 3 \
   --name "api-gateway" \
   --avoid 3000 3001 8080
 
 # Full example
-portmanager request 6 \
+portman request 6 \
   --name "full-stack-app" \
   --desc "Frontend, backend, and microservices" \
   --tags development docker \
@@ -283,7 +283,7 @@ portmanager request 6 \
   --avoid 4200 4444
 
 # JSON output
-portmanager request 2 --name "test" --json
+portman request 2 --name "test" --json
 # Output: {"ports":[{"number":3000,...},{"number":3001,...}],"summary":"Reserved 2 ports"}
 ```
 
@@ -292,20 +292,20 @@ Export port reservations to a JSON file.
 
 **Syntax:**
 ```bash
-portmanager export [filepath]
+portman export [filepath]
 ```
 
 **Examples:**
 ```bash
 # Export to default file
-portmanager export
-# Output: Exported to portmanager-export-2025-01-26.json
+portman export
+# Output: Exported to portman-export-2025-01-26.json
 
 # Export to specific file
-portmanager export ./configs/ports-backup.json
+portman export ./configs/ports-backup.json
 
 # Export and pipe to another command
-portmanager export - | jq '.ports | length'
+portman export - | jq '.ports | length'
 ```
 
 ### `import` - Import Configuration
@@ -313,7 +313,7 @@ Import port reservations from a JSON file.
 
 **Syntax:**
 ```bash
-portmanager import <filepath> [options]
+portman import <filepath> [options]
 ```
 
 **Options:**
@@ -324,34 +324,49 @@ portmanager import <filepath> [options]
 **Examples:**
 ```bash
 # Import from file
-portmanager import ./configs/ports-backup.json
+portman import ./configs/ports-backup.json
 # Output: Imported 5 ports, skipped 2 (already in use)
 
 # Import with validation
-portmanager import production-ports.json
+portman import production-ports.json
 # Output shows any conflicts or errors
 
 # JSON output
-portmanager import ports.json --json
+portman import ports.json --json
 # Output: {"imported":5,"skipped":1,"errors":0,"total":6}
 ```
 
 ### `gui` - Launch GUI Application
-Open the Port Manager desktop application.
+Open the Port Keeper desktop application.
 
 **Syntax:**
 ```bash
-portmanager gui
+portman gui [options] [command]
+```
+
+**Options:**
+- `--dev` - Run in development mode
+- `--help` - Display help for command
+
+**Subcommands:**
+- `install` - Install GUI dependencies (Electron)
+
+**Installation:**
+The GUI requires Electron. Install Port Keeper with optional dependencies:
+```bash
+npm install -g portkeeper --include=optional
 ```
 
 **Examples:**
 ```bash
-# Launch GUI
-portmanager gui
-# Opens the desktop application
+# Launch GUI (requires Electron)
+portman gui
 
-# Launch GUI in background (macOS/Linux)
-portmanager gui &
+# If Electron not found, you'll see installation instructions
+portman gui
+
+# Get installation help
+portman gui install
 ```
 
 ## Common Use Cases
@@ -359,57 +374,57 @@ portmanager gui &
 ### Development Environment Setup
 ```bash
 # Reserve common development ports
-portmanager reserve 3000 --name "frontend" --desc "React development server"
-portmanager reserve 8080 --name "backend" --desc "Express API server"
-portmanager reserve 5432 --name "database" --desc "PostgreSQL database"
-portmanager reserve 6379 --name "cache" --desc "Redis cache server"
+portman reserve 3000 --name "frontend" --desc "React development server"
+portman reserve 8080 --name "backend" --desc "Express API server"
+portman reserve 5432 --name "database" --desc "PostgreSQL database"
+portman reserve 6379 --name "cache" --desc "Redis cache server"
 
 # List all reserved ports
-portmanager list
+portman list
 ```
 
 ### Microservices Development
 ```bash
 # Request multiple ports for microservices
-portmanager request 5 \
+portman request 5 \
   --name "microservices" \
   --desc "User, Auth, Product, Order, Payment services" \
   --tags docker kubernetes microservice
 
 # Check specific service port
-portmanager check 3002
+portman check 3002
 ```
 
 ### CI/CD Pipeline
 ```bash
 # Request random ports to avoid conflicts
-portmanager request 3 \
+portman request 3 \
   --name "ci-test-$(date +%s)" \
   --random \
   --tags ci test temporary
 
 # Clean up after tests
-portmanager list --project "ci-test" --json | \
+portman list --project "ci-test" --json | \
   jq -r '.[] | .port' | \
-  xargs portmanager release
+  xargs portman release
 ```
 
 ### Port Conflict Resolution
 ```bash
 # Find what's using a port
-portmanager scan | grep 3000
+portman scan | grep 3000
 
 # Kill the process if needed
-portmanager kill 3000
+portman kill 3000
 
 # Reserve it for your project
-portmanager reserve 3000 --name "my-app"
+portman reserve 3000 --name "my-app"
 ```
 
 ### Team Collaboration
 ```bash
 # Export team's port configuration
-portmanager export team-ports.json
+portman export team-ports.json
 
 # Share with team via git
 git add team-ports.json
@@ -418,7 +433,7 @@ git push
 
 # Team member imports configuration
 git pull
-portmanager import team-ports.json
+portman import team-ports.json
 ```
 
 ## Error Handling
@@ -427,81 +442,81 @@ portmanager import team-ports.json
 
 **Port Already in Use**
 ```bash
-portmanager reserve 3000 --name "app"
+portman reserve 3000 --name "app"
 # Error: Port 3000 is already in use
 
 # Solution: Check what's using it
-portmanager check 3000
-portmanager scan | grep 3000
+portman check 3000
+portman scan | grep 3000
 
 # Then either kill it or use a different port
-portmanager kill 3000
+portman kill 3000
 # or
-portmanager reserve 3001 --name "app"
+portman reserve 3001 --name "app"
 ```
 
 **Port Already Reserved**
 ```bash
-portmanager reserve 8080 --name "new-project"
+portman reserve 8080 --name "new-project"
 # Error: Port 8080 is reserved for project "old-project"
 
 # Solution: Release it first
-portmanager release 8080
-portmanager reserve 8080 --name "new-project"
+portman release 8080
+portman reserve 8080 --name "new-project"
 ```
 
 **Invalid Port Number**
 ```bash
-portmanager check 99999
+portman check 99999
 # Error: Invalid port number: 99999. Must be between 1 and 65535
 ```
 
 **Permission Denied**
 ```bash
-portmanager kill 80
+portman kill 80
 # Error: Permission denied
 
 # Solution: Use sudo for system ports
-sudo portmanager kill 80
+sudo portman kill 80
 ```
 
 ## Tips and Best Practices
 
 1. **Use Descriptive Names**: Always provide meaningful project names and descriptions
    ```bash
-   portmanager reserve 3000 --name "customer-portal-frontend" \
+   portman reserve 3000 --name "customer-portal-frontend" \
      --desc "React app for customer self-service portal"
    ```
 
 2. **Tag Your Ports**: Use tags for better organization
    ```bash
-   portmanager reserve 8080 --name "api" --tags production critical monitored
+   portman reserve 8080 --name "api" --tags production critical monitored
    ```
 
 3. **Document Port Usage**: Export configurations regularly
    ```bash
    # Add to your project's setup script
-   portmanager export ./docs/port-config.json
+   portman export ./docs/port-config.json
    ```
 
 4. **Use Request for Multiple Ports**: Instead of reserving individually
    ```bash
    # Good
-   portmanager request 5 --name "microservices-dev"
+   portman request 5 --name "microservices-dev"
    
    # Avoid
-   portmanager reserve 3000 --name "service-1"
-   portmanager reserve 3001 --name "service-2"
+   portman reserve 3000 --name "service-1"
+   portman reserve 3001 --name "service-2"
    # etc...
    ```
 
 5. **Clean Up Regularly**: Release ports you're not using
    ```bash
    # Check what you have reserved
-   portmanager list --project "old-project"
+   portman list --project "old-project"
    
    # Release if not needed
-   portmanager release 4000 4001 4002
+   portman release 4000 4001 4002
    ```
 
 ## Automation and Scripting with JSON Output
@@ -512,13 +527,13 @@ The `--json` flag enables powerful automation capabilities by providing structur
 
 ```bash
 # Use jq to parse JSON output
-portmanager list --json | jq '.[] | select(.status == "in-use")'
+portman list --json | jq '.[] | select(.status == "in-use")'
 
 # Count reserved ports
-portmanager list --json | jq 'length'
+portman list --json | jq 'length'
 
 # Extract port numbers only
-portmanager list --json | jq -r '.[].number'
+portman list --json | jq -r '.[].number'
 ```
 
 ### Automated Port Management Scripts
@@ -527,7 +542,7 @@ portmanager list --json | jq -r '.[].number'
 #!/bin/bash
 # auto-reserve.sh - Automatically find and reserve an available port
 
-RESULT=$(portmanager request 1 --name "$1" --json)
+RESULT=$(portman request 1 --name "$1" --json)
 PORT=$(echo $RESULT | jq -r '.ports[0].number')
 
 if [ -n "$PORT" ]; then
@@ -545,7 +560,7 @@ fi
 # GitHub Actions example
 - name: Reserve test ports
   run: |
-    PORTS=$(portmanager request 3 --name "ci-test-${{ github.run_id }}" --json)
+    PORTS=$(portman request 3 --name "ci-test-${{ github.run_id }}" --json)
     echo "PORTS=$PORTS" >> $GITHUB_ENV
     echo $PORTS | jq -r '.ports[].number' > test-ports.txt
 
@@ -557,7 +572,7 @@ fi
 - name: Clean up ports
   if: always()
   run: |
-    cat test-ports.txt | xargs portmanager release
+    cat test-ports.txt | xargs portman release
 ```
 
 ### Monitoring and Alerting
@@ -567,13 +582,13 @@ fi
 # check-port-conflicts.sh - Monitor for port conflicts
 
 # Get all reserved ports
-RESERVED=$(portmanager list --json | jq -r '.[].number')
+RESERVED=$(portman list --json | jq -r '.[].number')
 
 # Check each reserved port
 for PORT in $RESERVED; do
-    STATUS=$(portmanager check $PORT --json | jq -r '.status')
+    STATUS=$(portman check $PORT --json | jq -r '.status')
     if [ "$STATUS" = "in-use" ]; then
-        PROJECT=$(portmanager check $PORT --json | jq -r '.projectName')
+        PROJECT=$(portman check $PORT --json | jq -r '.projectName')
         echo "ALERT: Port $PORT reserved for $PROJECT is in use by another process"
     fi
 done
@@ -585,7 +600,7 @@ done
 # docker-port-manager.sh - Manage ports for Docker containers
 
 # Reserve ports for container
-PORTS=$(portmanager request 2 --name "docker-$1" --json)
+PORTS=$(portman request 2 --name "docker-$1" --json)
 WEB_PORT=$(echo $PORTS | jq -r '.ports[0].number')
 API_PORT=$(echo $PORTS | jq -r '.ports[1].number')
 
@@ -598,7 +613,7 @@ docker run -d \
 
 # Clean up on container stop
 docker wait $1
-portmanager release $WEB_PORT $API_PORT
+portman release $WEB_PORT $API_PORT
 ```
 
 ### Python Integration
@@ -611,7 +626,7 @@ import subprocess
 def get_available_port(project_name):
     """Reserve an available port for a project"""
     result = subprocess.run(
-        ['portmanager', 'request', '1', '--name', project_name, '--json'],
+        ['portman', 'request', '1', '--name', project_name, '--json'],
         capture_output=True,
         text=True
     )
@@ -636,7 +651,7 @@ const { execSync } = require('child_process');
 function reserveDevPort(projectName) {
   try {
     const result = execSync(
-      `portmanager request 1 --name "${projectName}" --json`,
+      `portman request 1 --name "${projectName}" --json`,
       { encoding: 'utf8' }
     );
     const data = JSON.parse(result);
@@ -656,19 +671,19 @@ process.env.PORT = port;
 
 ```bash
 # Batch port operations
-portmanager list --json | \
+portman list --json | \
   jq -r '.[] | select(.projectName | startswith("test-")) | .number' | \
-  xargs portmanager release
+  xargs portman release
 
 # Port usage report
-portmanager scan --json | \
+portman scan --json | \
   jq -r '.[] | [.number, .processName, .pid] | @csv' > port-usage.csv
 
 # Auto-cleanup old reservations
-portmanager list --json | \
+portman list --json | \
   jq -r --arg date "$(date -d '7 days ago' -u +%Y-%m-%dT%H:%M:%S.%3NZ)" \
   '.[] | select(.reservedAt < $date) | .number' | \
-  xargs -r portmanager release
+  xargs -r portman release
 ```
 
 ## Integration Examples
@@ -677,9 +692,9 @@ portmanager list --json | \
 ```json
 {
   "scripts": {
-    "predev": "portmanager check 3000 || portmanager kill 3000",
-    "dev": "portmanager reserve 3000 --name 'my-app' && npm start",
-    "postdev": "portmanager release 3000"
+    "predev": "portman check 3000 || portman kill 3000",
+    "dev": "portman reserve 3000 --name 'my-app' && npm start",
+    "postdev": "portman release 3000"
   }
 }
 ```
@@ -691,21 +706,21 @@ services:
     ports:
       - "3000:3000"
     command: >
-      sh -c "portmanager reserve 3000 --name 'docker-app' &&
+      sh -c "portman reserve 3000 --name 'docker-app' &&
              node server.js"
 ```
 
 ### Shell Aliases
 ```bash
 # Add to ~/.bashrc or ~/.zshrc
-alias pm='portmanager'
-alias pmcheck='portmanager check'
-alias pmlist='portmanager list'
-alias pmkill='portmanager kill'
+alias pm='portman'
+alias pmcheck='portman check'
+alias pmlist='portman list'
+alias pmkill='portman kill'
 
 # Quick port check function
 checkport() {
-  portmanager check $1 || portmanager scan | grep $1
+  portman check $1 || portman scan | grep $1
 }
 ```
 
@@ -720,33 +735,33 @@ npm run build:gui
 ./scripts/fix-native-modules.sh electron
 
 # Try again
-portmanager gui
+portman gui
 ```
 
 ### Database Issues
 ```bash
-# Database is stored at ~/.portmanager/ports.db
+# Database is stored at ~/.portman/ports.db
 # Backup current database
-cp ~/.portmanager/ports.db ~/.portmanager/ports.db.backup
+cp ~/.portman/ports.db ~/.portman/ports.db.backup
 
 # Reset if corrupted (loses all reservations)
-rm ~/.portmanager/ports.db
-portmanager list  # Creates new database
+rm ~/.portman/ports.db
+portman list  # Creates new database
 ```
 
 ### Command Not Found
 ```bash
 # Ensure proper installation
-npm install -g portmanager
+npm install -g portman
 
 # Or if installed locally
 npm link
 
 # Verify installation
-which portmanager
-portmanager --version
+which portman
+portman --version
 ```
 
 ---
 
-For more information, visit the [GitHub repository](https://github.com/ahmadzein/portmanager) or run `portmanager --help`.
+For more information, visit the [GitHub repository](https://github.com/ahmadzein/portman) or run `portman --help`.

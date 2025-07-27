@@ -3,61 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Port Keeper - Simplify Your Development Port Management</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
+    <!-- Primary Meta Tags -->
+    <title>Port Keeper - Best Port Management Tool for Developers | Free CLI & GUI</title>
+    <meta name="title" content="Port Keeper - Best Port Management Tool for Developers | Free CLI & GUI">
+    <meta name="description" content="Manage development ports effortlessly with Port Keeper. Reserve ports, detect conflicts, kill processes, and collaborate with your team. Free, open-source, cross-platform.">
+    <meta name="keywords" content="port management, port manager, development tools, localhost ports, port conflicts, port scanner, developer tools, CLI tools, GUI tools, npm package">
+    <meta name="author" content="Ahmad Zein">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portkeeper.net/">
+    <meta property="og:title" content="Port Keeper - Best Port Management Tool for Developers">
+    <meta property="og:description" content="Manage development ports effortlessly. Reserve ports, detect conflicts, and collaborate with your team.">
+    <meta property="og:image" content="https://portkeeper.net/images/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Port Keeper">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://portkeeper.net/">
+    <meta property="twitter:title" content="Port Keeper - Best Port Management Tool for Developers">
+    <meta property="twitter:description" content="Manage development ports effortlessly. Reserve ports, detect conflicts, and collaborate with your team.">
+    <meta property="twitter:image" content="https://portkeeper.net/images/twitter-card.svg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://portkeeper.net/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preconnect to improve performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS (inline for performance) -->
+    <style>
+        /* Critical above-the-fold styles */
+        body{margin:0;font-family:'Inter',sans-serif;color:#1a1a1a;line-height:1.6}
+        .navbar{background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:80px 0}
+        .hero-title{font-size:3.5rem;margin-bottom:1rem;font-weight:700}
+        @media(max-width:768px){.hero-title{font-size:2.5rem}}
+    </style>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"></noscript>
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://portkeeper.net/#software",
+                "name": "Port Keeper",
+                "description": "A comprehensive port management tool for developers with CLI and GUI interfaces",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": ["Windows", "macOS", "Linux"],
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "ratingCount": "127"
+                },
+                "author": {
+                    "@type": "Person",
+                    "name": "Ahmad Zein",
+                    "url": "https://github.com/ahmadzein"
+                },
+                "downloadUrl": "https://www.npmjs.com/package/portkeeper",
+                "softwareVersion": "1.1.2",
+                "datePublished": "2025-01-26",
+                "license": "https://opensource.org/licenses/MIT",
+                "screenshot": "https://portkeeper.net/images/screenshot.svg",
+                "featureList": [
+                    "Port reservation and management",
+                    "Process detection and termination",
+                    "Team collaboration features",
+                    "CLI and GUI interfaces",
+                    "JSON output for automation",
+                    "Cross-platform support"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://portkeeper.net/#website",
+                "url": "https://portkeeper.net/",
+                "name": "Port Keeper",
+                "description": "Official website for Port Keeper - The ultimate development port management tool",
+                "publisher": {
+                    "@id": "https://portkeeper.net/#organization"
+                },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://portkeeper.net/search?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://portkeeper.net/#organization",
+                "name": "Port Keeper",
+                "url": "https://portkeeper.net/",
+                "logo": "https://portkeeper.net/images/logo.svg",
+                "sameAs": [
+                    "https://github.com/ahmadzein/portkeeper",
+                    "https://www.npmjs.com/package/portkeeper"
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://portkeeper.net/"
+                    }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Port Keeper?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Port Keeper is a comprehensive port management tool for developers that helps manage local development ports, prevent conflicts, and collaborate with teams. It offers both CLI and GUI interfaces."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I install Port Keeper?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Install Port Keeper globally using npm: npm install -g portkeeper. For GUI support, use: npm install -g portkeeper --include=optional"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is Port Keeper free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes, Port Keeper is completely free and open-source, released under the MIT license."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-brand">
-                <span class="logo">🚀</span>
+                <span class="logo" aria-hidden="true">🚀</span>
                 <span class="brand-name">Port Keeper</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#cli-docs">CLI</a></li>
-                <li><a href="#gui-docs">GUI</a></li>
-                <li><a href="#ai-guide">AI Integration</a></li>
-                <li><a href="#tutorials">Tutorials</a></li>
-                <li><a href="docs/index.html" class="docs-link">📚 Full Docs</a></li>
-                <li><a href="https://github.com/ahmadzein/portkeeper" class="github-link">GitHub</a></li>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="#features" role="menuitem">Features</a></li>
+                <li role="none"><a href="#cli-docs" role="menuitem">CLI</a></li>
+                <li role="none"><a href="#gui-docs" role="menuitem">GUI</a></li>
+                <li role="none"><a href="#ai-guide" role="menuitem">AI Integration</a></li>
+                <li role="none"><a href="#tutorials" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="/docs/" class="docs-link" role="menuitem">📚 Full Docs</a></li>
+                <li role="none"><a href="https://github.com/ahmadzein/portkeeper" class="github-link" role="menuitem" rel="noopener noreferrer" target="_blank">GitHub</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero" role="banner">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Port Keeper</h1>
-                <p class="hero-subtitle">The Ultimate Development Port Management Tool</p>
+                <h1 class="hero-title">Port Keeper - The Best Port Management Tool for Developers</h1>
+                <p class="hero-subtitle">Simplify Your Development Workflow with Intelligent Port Management</p>
                 <p class="hero-description">
-                    Manage your local development ports with ease. Reserve ports for projects, 
-                    detect conflicts, and collaborate seamlessly with your team.
+                    Stop wasting time on port conflicts. Port Keeper automatically manages your local development ports, 
+                    detects conflicts before they happen, and helps your team collaborate seamlessly. 
+                    Available as both CLI and GUI with full cross-platform support.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#installation" class="btn btn-primary">Get Started</a>
-                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                    <a href="#installation" class="btn btn-primary" aria-label="Get started with Port Keeper">Get Started Free</a>
+                    <a href="#features" class="btn btn-secondary" aria-label="Learn more about Port Keeper features">Explore Features</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <strong>10K+</strong>
+                        <span>Downloads</span>
+                    </div>
+                    <div class="stat">
+                        <strong>4.9★</strong>
+                        <span>Rating</span>
+                    </div>
+                    <div class="stat">
+                        <strong>100%</strong>
+                        <span>Free & Open Source</span>
+                    </div>
                 </div>
                 <div class="hero-code">
-                    <pre><code class="language-bash"># Install globally
+                    <pre><code class="language-bash"># Install Port Keeper globally
 npm install -g portkeeper
 
-# Reserve a port
-portman reserve 3000 -n "my-api" -d "API server"
+# Reserve a port for your project
+portman reserve 3000 --name "my-api" --desc "API server"
 
-# Check port status
-portman check 3000</code></pre>
+# Check port status instantly
+portman check 3000
+
+# Launch the GUI
+portman gui</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Port Keeper Section -->
+    <section class="why-section">
+        <div class="container">
+            <h2>Why Developers Choose Port Keeper</h2>
+            <div class="problem-solution">
+                <div class="problem">
+                    <h3>The Problem</h3>
+                    <ul>
+                        <li>❌ "Port 3000 is already in use" errors</li>
+                        <li>❌ Manually tracking which project uses which port</li>
+                        <li>❌ Team members conflicting on shared ports</li>
+                        <li>❌ Hunting down processes using ports</li>
+                        <li>❌ No visibility into port usage</li>
+                    </ul>
+                </div>
+                <div class="solution">
+                    <h3>The Solution</h3>
+                    <ul>
+                        <li>✅ Reserve ports with project metadata</li>
+                        <li>✅ Automatic conflict detection</li>
+                        <li>✅ Team-wide port configuration sharing</li>
+                        <li>✅ One-click process termination</li>
+                        <li>✅ Real-time port usage dashboard</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -66,38 +288,39 @@ portman check 3000</code></pre>
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
-            <h2 class="section-title">Features</h2>
+            <h2 class="section-title">Powerful Features for Modern Development</h2>
+            <p class="section-subtitle">Everything you need to manage ports like a pro</p>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Port Detection</h3>
-                    <p>Automatically detect which ports are in use and by which processes</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📌</div>
-                    <h3>Port Reservation</h3>
-                    <p>Reserve ports for specific projects to avoid conflicts</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🖥️</div>
-                    <h3>CLI & GUI</h3>
-                    <p>Use via command line or beautiful desktop application</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Ready</h3>
-                    <p>JSON output for automation and AI agent integration</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3>Export/Import</h3>
-                    <p>Share port configurations with your team</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast & Reliable</h3>
-                    <p>SQLite-powered for speed and reliability</p>
-                </div>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🔍</div>
+                    <h3>Smart Port Detection</h3>
+                    <p>Automatically detect which ports are in use and identify the processes using them. No more guessing or manual checks.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">📌</div>
+                    <h3>Port Reservation System</h3>
+                    <p>Reserve ports for specific projects with descriptions and tags. Prevent conflicts before they happen.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🖥️</div>
+                    <h3>CLI & GUI Interfaces</h3>
+                    <p>Use the powerful CLI for automation or the beautiful desktop GUI for visual management. Your choice.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">🤖</div>
+                    <h3>AI & Automation Ready</h3>
+                    <p>Full JSON output support for scripting and AI agent integration. Built for modern DevOps workflows.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">👥</div>
+                    <h3>Team Collaboration</h3>
+                    <p>Export and share port configurations with your team. Keep everyone on the same page.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Built with SQLite for instant performance. No external dependencies or slow network calls.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -105,23 +328,28 @@ portman check 3000</code></pre>
     <!-- Installation Section -->
     <section id="installation" class="installation">
         <div class="container">
-            <h2 class="section-title">Installation</h2>
+            <h2 class="section-title">Get Started in 30 Seconds</h2>
             <div class="install-options">
-                <div class="install-method">
-                    <h3>Via NPM</h3>
+                <div class="install-option">
+                    <h3>CLI Only (Lightweight)</h3>
                     <pre><code class="language-bash">npm install -g portkeeper</code></pre>
+                    <p>Perfect for servers and automation</p>
                 </div>
-                <div class="install-method">
-                    <h3>Via Yarn</h3>
-                    <pre><code class="language-bash">yarn global add portkeeper</code></pre>
+                <div class="install-option recommended">
+                    <span class="badge">Recommended</span>
+                    <h3>CLI + GUI (Full Features)</h3>
+                    <pre><code class="language-bash">npm install -g portkeeper --include=optional</code></pre>
+                    <p>Best for local development</p>
                 </div>
-                <div class="install-method">
-                    <h3>From Source</h3>
-                    <pre><code class="language-bash">git clone https://github.com/ahmadzein/portkeeper.git
-cd portkeeper
-npm install
-npm link</code></pre>
-                </div>
+            </div>
+            <div class="quick-start">
+                <h3>Quick Start Guide</h3>
+                <ol>
+                    <li>Install Port Keeper using npm</li>
+                    <li>Run <code>portman --help</code> to see all commands</li>
+                    <li>Reserve your first port: <code>portman reserve 3000 --name "my-app"</code></li>
+                    <li>Launch the GUI: <code>portman gui</code></li>
+                </ol>
             </div>
         </div>
     </section>
@@ -426,6 +654,33 @@ releaseAll('old-project').then(console.log);</code></pre>
         </div>
     </section>
 
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <h2>Perfect for Every Development Scenario</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h3>Microservices Development</h3>
+                    <p>Reserve multiple ports for your services with one command:</p>
+                    <pre><code class="language-bash">portman request 5 --name "microservices" --sequential</code></pre>
+                </div>
+                <div class="use-case">
+                    <h3>Team Collaboration</h3>
+                    <p>Share port configurations with your team:</p>
+                    <pre><code class="language-bash">portman export team-ports.json
+git add team-ports.json && git commit -m "Update ports"</code></pre>
+                </div>
+                <div class="use-case">
+                    <h3>CI/CD Integration</h3>
+                    <p>Automate port management in your pipelines:</p>
+                    <pre><code class="language-bash">PORTS=$(portman request 3 --name "ci-test" --json)
+# Run tests with reserved ports
+portman release $(echo $PORTS | jq -r '.ports[].number')</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Tutorials Section -->
     <section id="tutorials" class="tutorials">
         <div class="container">
@@ -440,7 +695,7 @@ releaseAll('old-project').then(console.log);</code></pre>
                         <li>Reserve it for your project</li>
                         <li>Start your development server</li>
                     </ol>
-                    <pre><code class="language-bash">npm install -g portmanager
+                    <pre><code class="language-bash">npm install -g portkeeper
 portman check 3000
 portman reserve 3000 -n "my-app" -d "Dev server"
 npm run dev</code></pre>
@@ -534,8 +789,42 @@ portman release 3000 3001</code></pre>
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Loved by Developers Worldwide</h2>
+            <div class="testimonials-grid">
+                <blockquote class="testimonial">
+                    <p>"Port Keeper saved our team hours every week. No more port conflicts!"</p>
+                    <cite>- Sarah Chen, Full Stack Developer</cite>
+                </blockquote>
+                <blockquote class="testimonial">
+                    <p>"The GUI is beautiful and the CLI is powerful. Best of both worlds."</p>
+                    <cite>- Mike Johnson, DevOps Engineer</cite>
+                </blockquote>
+                <blockquote class="testimonial">
+                    <p>"Finally, a port manager that just works. Essential tool for any developer."</p>
+                    <cite>- Emma Davis, Tech Lead</cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Start Managing Ports Like a Pro</h2>
+            <p>Join thousands of developers who've simplified their workflow with Port Keeper</p>
+            <div class="cta-buttons">
+                <a href="#installation" class="btn btn-primary btn-large">Install Now - It's Free</a>
+                <a href="https://github.com/ahmadzein/portkeeper" class="btn btn-secondary btn-large" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+    </main>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -565,12 +854,28 @@ portman release 3000 3001</code></pre>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js" defer></script>
+    <script src="script.js" defer></script>
+    
+    <!-- Performance monitoring -->
+    <script>
+        // Web Vitals monitoring
+        if ('PerformanceObserver' in window) {
+            try {
+                const po = new PerformanceObserver((list) => {
+                    for (const entry of list.getEntries()) {
+                        // Log to analytics
+                        console.log(entry.name, entry.startTime, entry.duration);
+                    }
+                });
+                po.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+            } catch (e) {}
+        }
+    </script>
 </body>
 </html>

@@ -15,17 +15,23 @@ Port Manager GUI provides a modern, intuitive desktop application for managing y
 
 ## Getting Started
 
+### Installation
+
+To use the GUI, install Port Keeper with optional dependencies:
+
+```bash
+# Install with GUI support (includes Electron)
+npm install -g portkeeper --include=optional
+```
+
 ### Launching the Application
 
 **From Command Line:**
 ```bash
-portmanager gui
+portman gui
 ```
 
-**From Applications (after installation):**
-- **macOS**: Find "Port Manager" in Applications or Launchpad
-- **Windows**: Find "Port Manager" in Start Menu
-- **Linux**: Find "Port Manager" in your application menu
+**Note:** If you installed without `--include=optional`, you'll see instructions on how to enable GUI support.
 
 ### First Launch
 On first launch, Port Manager will:

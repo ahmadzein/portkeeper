@@ -42,13 +42,13 @@ Port Manager is a comprehensive tool for managing local development ports. It he
 ### Install via npm (Coming Soon)
 ```bash
 # Will be available after npm publish
-npm install -g portmanager
+npm install -g portkeeper
 ```
 
 ### Install from Source (Currently Available)
 ```bash
-git clone https://github.com/ahmadzein/portmanager.git
-cd portmanager
+git clone https://github.com/ahmadzein/portkeeper.git
+cd portkeeper
 npm install
 npm run build
 npm link
@@ -314,7 +314,7 @@ A: Visit our GitHub repository and check the CONTRIBUTING.md file.
 
 ## Support
 
-- **GitHub Issues**: [Report bugs](https://github.com/yourusername/portmanager/issues)
+- **GitHub Issues**: [Report bugs](https://github.com/ahmadzein/portkeeper/issues)
 - **Discord**: [Join our community](https://discord.gg/portmanager)
 - **Email**: support@portmanager.dev
 

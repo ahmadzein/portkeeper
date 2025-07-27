@@ -17,8 +17,8 @@ const program = new Command();
 
 program
   .name('portman')
-  .description('Port Manager - Manage your local development ports')
-  .version('1.0.0');
+  .description('Port Keeper - Manage your local development ports')
+  .version('1.1.2');
 
 program.addCommand(checkCommand);
 program.addCommand(reserveCommand);

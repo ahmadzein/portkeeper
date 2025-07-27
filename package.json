@@ -1,6 +1,6 @@
 {
   "name": "portkeeper",
-  "version": "1.0.0",
+  "version": "1.1.10",
   "description": "A comprehensive port management tool for developers with CLI and GUI interfaces",
   "main": "dist/cli/index.js",
   "type": "module",
@@ -10,7 +10,10 @@
   "files": [
     "dist/",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "resources/",
+    "scripts/",
+    "electron.vite.config.ts"
   ],
   "scripts": {
     "dev": "npm run dev:cli",
@@ -19,9 +22,8 @@
     "dev:electron": "electron-vite dev",
     "start": "electron .",
     "build": "npm run build:cli && npm run build:gui",
-    "build:npm": "npm run build:cli",
+    "build:npm": "npm run build:cli && npm run build:gui",
     "prepublishOnly": "npm run build:npm",
-    "postinstall": "npm run fix:node",
     "fix:electron": "npm rebuild better-sqlite3 --runtime=electron --target=28.0.0 --dist-url=https://electronjs.org/headers --abi=119",
     "fix:node": "npm rebuild better-sqlite3",
     "build:cli": "tsc -p tsconfig.cli.json",
@@ -73,6 +75,9 @@
     "react-dom": "^18.2.0",
     "zustand": "^4.4.7"
   },
+  "optionalDependencies": {
+    "electron": "^28.0.0"
+  },
   "devDependencies": {
     "@electron-toolkit/utils": "^2.0.1",
     "@types/better-sqlite3": "^7.6.8",
@@ -83,7 +88,6 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "electron": "^28.0.0",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",

@@ -1,172 +1,215 @@
-// Mobile Navigation Toggle
+// Port Keeper - Optimized JavaScript for Performance
+
+// Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+    
+    // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
     
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+    // Smooth Scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offset = 80; // Navbar height
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
-});
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offset = 80; // Height of fixed navbar
-            const targetPosition = target.offsetTop - offset;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+    // Lazy Loading for Images
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
             });
-        }
-    });
-});
-
-// Add active class to navigation based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const scrollY = window.pageYOffset;
-    
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+        });
         
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLink?.classList.add('active');
-        } else {
-            navLink?.classList.remove('active');
-        }
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    // Copy to Clipboard for Code Blocks
+    document.querySelectorAll('pre code').forEach(block => {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+        
+        const pre = block.parentElement;
+        pre.style.position = 'relative';
+        pre.appendChild(button);
+        
+        button.addEventListener('click', async function() {
+            try {
+                await navigator.clipboard.writeText(block.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
     });
-});
 
-// Add animation on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+    // Service Worker Registration for PWA
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('SW registered:', registration))
+                .catch(error => console.log('SW registration failed:', error));
+        });
+    }
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-        }
-    });
-}, observerOptions);
-
-// Observe all feature cards and command cards
-document.querySelectorAll('.feature-card, .command-card, .tutorial-card').forEach(el => {
-    observer.observe(el);
-});
-
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    .fade-in {
-        animation: fadeIn 0.6s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .nav-menu.active {
-        display: flex !important;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: white;
-        flex-direction: column;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-    
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-    
-    .nav-menu a.active {
-        color: var(--primary-color);
-        font-weight: 600;
-    }
-`;
-document.head.appendChild(style);
-
-// Copy code to clipboard functionality
-document.querySelectorAll('pre').forEach(pre => {
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'relative';
-    pre.parentNode.insertBefore(wrapper, pre);
-    wrapper.appendChild(pre);
-    
-    const button = document.createElement('button');
-    button.textContent = 'Copy';
-    button.style.cssText = `
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.25rem 0.75rem;
-        background: rgba(255, 255, 255, 0.1);
-        color: #94a3b8;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    `;
-    
-    button.addEventListener('mouseenter', () => {
-        button.style.background = 'rgba(255, 255, 255, 0.2)';
-        button.style.color = 'white';
-    });
-    
-    button.addEventListener('mouseleave', () => {
-        button.style.background = 'rgba(255, 255, 255, 0.1)';
-        button.style.color = '#94a3b8';
-    });
-    
-    button.addEventListener('click', async () => {
-        const code = pre.querySelector('code').textContent;
+    // Performance Monitoring
+    if ('PerformanceObserver' in window) {
+        // Monitor Largest Contentful Paint
         try {
-            await navigator.clipboard.writeText(code);
-            button.textContent = 'Copied!';
-            button.style.color = '#10b981';
-            setTimeout(() => {
-                button.textContent = 'Copy';
-                button.style.color = '#94a3b8';
-            }, 2000);
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    });
+            const lcpObserver = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                console.log('LCP:', lastEntry.startTime);
+                // Send to analytics
+                if (window.gtag) {
+                    gtag('event', 'LCP', {
+                        event_category: 'Web Vitals',
+                        value: Math.round(lastEntry.startTime)
+                    });
+                }
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+        } catch (e) {}
+        
+        // Monitor First Input Delay
+        try {
+            const fidObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    const delay = entry.processingStart - entry.startTime;
+                    console.log('FID:', delay);
+                    // Send to analytics
+                    if (window.gtag) {
+                        gtag('event', 'FID', {
+                            event_category: 'Web Vitals',
+                            value: Math.round(delay)
+                        });
+                    }
+                }
+            });
+            fidObserver.observe({ entryTypes: ['first-input'] });
+        } catch (e) {}
+        
+        // Monitor Cumulative Layout Shift
+        try {
+            let clsValue = 0;
+            let clsEntries = [];
+            
+            const clsObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                        clsEntries.push(entry);
+                    }
+                }
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+            
+            // Report CLS when page is about to unload
+            addEventListener('beforeunload', () => {
+                console.log('CLS:', clsValue);
+                // Send to analytics
+                if (window.gtag) {
+                    gtag('event', 'CLS', {
+                        event_category: 'Web Vitals',
+                        value: Math.round(clsValue * 1000)
+                    });
+                }
+            });
+        } catch (e) {}
+    }
+
+    // Search functionality (for future implementation)
+    const searchForm = document.querySelector('.search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = this.querySelector('input[name="q"]').value;
+            if (query) {
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        });
+    }
     
-    wrapper.appendChild(button);
+    // Newsletter signup (for future implementation)
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const button = this.querySelector('button');
+            const originalText = button.textContent;
+            
+            button.disabled = true;
+            button.textContent = 'Subscribing...';
+            
+            try {
+                // Implement newsletter API call here
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated
+                button.textContent = 'Subscribed!';
+                this.reset();
+            } catch (error) {
+                button.textContent = 'Error. Try again.';
+            } finally {
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }, 3000);
+            }
+        });
+    }
 });
+
+// Optimize font loading
+if ('fonts' in document) {
+    Promise.all([
+        document.fonts.load('400 1em Inter'),
+        document.fonts.load('600 1em Inter'),
+        document.fonts.load('700 1em Inter'),
+        document.fonts.load('400 1em JetBrains Mono')
+    ]).then(() => {
+        document.documentElement.classList.add('fonts-loaded');
+    });
+}
