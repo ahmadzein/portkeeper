@@ -1,6 +1,6 @@
 {
   "name": "portkeeper",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A comprehensive port management tool for developers with CLI and GUI interfaces",
   "main": "dist/cli/index.js",
   "type": "module",
@@ -11,9 +11,9 @@
     "dist/",
     "README.md",
     "LICENSE",
-    "resources/",
-    "scripts/",
-    "electron.vite.config.ts"
+    "CHANGELOG.md",
+    "scripts/postinstall.cjs",
+    "scripts/ensure-electron.cjs"
   ],
   "scripts": {
     "dev": "npm run dev:cli",

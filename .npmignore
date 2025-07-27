@@ -3,6 +3,11 @@ src/
 *.ts
 !dist/**/*.d.ts
 
+# Source maps
+*.map
+*.js.map
+*.d.ts.map
+
 # Configuration files
 tsconfig*.json
 jest.config.cjs
@@ -32,8 +37,10 @@ wiki/
 !CHANGELOG.md
 !LICENSE
 
-# Scripts
-scripts/
+# Scripts (keep postinstall scripts)
+scripts/debug-gui.sh
+scripts/test-gui.sh
+scripts/fix-native-modules.sh
 
 # Include GUI source for development
 # GUI dist files are included
