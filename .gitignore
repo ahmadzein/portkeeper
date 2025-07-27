@@ -1,0 +1,80 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production
+dist/
+dist-electron/
+release/
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Test coverage
+coverage/
+*.lcov
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build artifacts
+build/
+out/
+
+# Electron
+electron-builder.yml
+!electron-builder.config.js
+
+# AI development folder
+ai/
+
+# Team meeting notes and internal docs
+TEAM_MEETING_*.md
+TEST_*.md
+COMPREHENSIVE_*.md
+PROJECT_*.md
+FINAL_*.md
+RENAME_*.md
+PUBLISH_*.md
+*_SUMMARY.md
+*_FINDINGS*.md
+*_GUIDE.md
+*_PLAN.md
+*_MATRIX.md
+
+# Website build artifacts
+website/website/
+website/fix-favicons.*
+website/generate-favicons.sh
+website/.htaccess*
+
+# Temporary scripts
+scripts/postinstall-simple.js

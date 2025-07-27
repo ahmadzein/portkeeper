@@ -1,0 +1,17 @@
+<svg width="1280" height="720" xmlns="http://www.w3.org/2000/svg">
+        <rect width="1280" height="720" fill="#1a1a1a"/>
+        <rect x="100" y="100" width="1080" height="520" fill="#2d2d2d"/>
+        <rect x="100" y="100" width="1080" height="40" fill="#3d3d3d"/>
+        <circle cx="130" cy="120" r="6" fill="#ff5f56"/>
+        <circle cx="150" cy="120" r="6" fill="#ffbd2e"/>
+        <circle cx="170" cy="120" r="6" fill="#27c93f"/>
+        <text x="140" y="200" font-family="monospace" font-size="20" fill="#10b981">$ portman list</text>
+        <text x="140" y="250" font-family="monospace" font-size="18" fill="#e5e5e5">PORT   SERVICE          PROJECT      STATUS</text>
+        <text x="140" y="280" font-family="monospace" font-size="18" fill="#e5e5e5">----   -------          -------      ------</text>
+        <text x="140" y="310" font-family="monospace" font-size="18" fill="#e5e5e5">3000   React Dev        my-app       Active</text>
+        <text x="140" y="340" font-family="monospace" font-size="18" fill="#e5e5e5">8080   API Server       backend      Reserved</text>
+        <text x="140" y="370" font-family="monospace" font-size="18" fill="#e5e5e5">5432   PostgreSQL       database     Active</text>
+        <text x="140" y="400" font-family="monospace" font-size="18" fill="#e5e5e5">6379   Redis           cache        Reserved</text>
+        <text x="140" y="480" font-family="monospace" font-size="20" fill="#10b981">$ portman check 3000</text>
+        <text x="140" y="510" font-family="monospace" font-size="18" fill="#e5e5e5">✓ Port 3000 is in use by: React Dev (my-app)</text>
+    </svg>

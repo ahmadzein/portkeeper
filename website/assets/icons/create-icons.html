@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Port Keeper Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .icon-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5a6edb;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generate Port Keeper Icons</h1>
+    
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Open this file in a web browser</li>
+            <li>The icons will be generated automatically</li>
+            <li>Click "Download All" to save all icons as a ZIP file, or download individually</li>
+            <li>Extract and place the PNG files in the website/assets/icons/ directory</li>
+        </ol>
+    </div>
+
+    <div class="icon-container">
+        <h2>Favicon Icons</h2>
+        <canvas id="icon-16" width="16" height="16"></canvas>
+        <canvas id="icon-32" width="32" height="32"></canvas>
+        <canvas id="icon-72" width="72" height="72"></canvas>
+        <canvas id="icon-96" width="96" height="96"></canvas>
+        <canvas id="icon-128" width="128" height="128"></canvas>
+        <canvas id="icon-144" width="144" height="144"></canvas>
+        <canvas id="icon-152" width="152" height="152"></canvas>
+        <canvas id="icon-180" width="180" height="180"></canvas>
+        <canvas id="icon-192" width="192" height="192"></canvas>
+        <canvas id="icon-384" width="384" height="384"></canvas>
+        <canvas id="icon-512" width="512" height="512"></canvas>
+        
+        <div>
+            <button onclick="downloadIcon('icon-16', 'favicon-16x16.png')">Download 16x16</button>
+            <button onclick="downloadIcon('icon-32', 'favicon-32x32.png')">Download 32x32</button>
+            <button onclick="downloadIcon('icon-72', 'icon-72x72.png')">Download 72x72</button>
+            <button onclick="downloadIcon('icon-96', 'icon-96x96.png')">Download 96x96</button>
+            <button onclick="downloadIcon('icon-128', 'icon-128x128.png')">Download 128x128</button>
+            <button onclick="downloadIcon('icon-144', 'icon-144x144.png')">Download 144x144</button>
+            <button onclick="downloadIcon('icon-152', 'icon-152x152.png')">Download 152x152</button>
+            <button onclick="downloadIcon('icon-180', 'apple-touch-icon.png')">Download Apple Touch Icon</button>
+            <button onclick="downloadIcon('icon-192', 'android-chrome-192x192.png')">Download Android 192</button>
+            <button onclick="downloadIcon('icon-384', 'icon-384x384.png')">Download 384x384</button>
+            <button onclick="downloadIcon('icon-512', 'android-chrome-512x512.png')">Download Android 512</button>
+        </div>
+    </div>
+
+    <div class="icon-container">
+        <h2>Microsoft Tile</h2>
+        <canvas id="mstile" width="150" height="150"></canvas>
+        <button onclick="downloadIcon('mstile', 'mstile-150x150.png')">Download MS Tile</button>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // For smaller icons, use solid color
+            if (size < 72) {
+                ctx.fillStyle = '#667eea';
+            } else {
+                ctx.fillStyle = gradient;
+            }
+            
+            // Round corners for larger icons
+            if (size >= 128) {
+                const radius = size * 0.15;
+                ctx.beginPath();
+                ctx.moveTo(radius, 0);
+                ctx.lineTo(size - radius, 0);
+                ctx.quadraticCurveTo(size, 0, size, radius);
+                ctx.lineTo(size, size - radius);
+                ctx.quadraticCurveTo(size, size, size - radius, size);
+                ctx.lineTo(radius, size);
+                ctx.quadraticCurveTo(0, size, 0, size - radius);
+                ctx.lineTo(0, radius);
+                ctx.quadraticCurveTo(0, 0, radius, 0);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                ctx.fillRect(0, 0, size, size);
+            }
+            
+            // Draw white circle background for rocket
+            if (size >= 32) {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size * 0.35, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw rocket emoji or P letter
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            if (size >= 128) {
+                // Try rocket emoji for larger sizes
+                ctx.font = `${size * 0.5}px Arial`;
+                ctx.fillStyle = '#667eea';
+                ctx.fillText('🚀', size/2, size/2);
+            } else if (size >= 32) {
+                // Use P letter for medium sizes
+                ctx.font = `bold ${size * 0.5}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+                ctx.fillStyle = '#667eea';
+                ctx.fillText('P', size/2, size/2);
+            } else {
+                // For very small icons, just use a simple P
+                ctx.font = `bold ${size * 0.7}px Arial`;
+                ctx.fillStyle = 'white';
+                ctx.fillText('P', size/2, size/2);
+            }
+        }
+
+        function drawMSTile() {
+            const canvas = document.getElementById('mstile');
+            const ctx = canvas.getContext('2d');
+            const size = 150;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Solid purple background (MS tiles typically use solid colors)
+            ctx.fillStyle = '#667eea';
+            ctx.fillRect(0, 0, size, size);
+            
+            // White circle
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, 50, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Rocket or P
+            ctx.font = '60px Arial';
+            ctx.fillStyle = '#667eea';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🚀', size/2, size/2);
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Generate all icons on load
+        window.onload = function() {
+            drawIcon('icon-16', 16);
+            drawIcon('icon-32', 32);
+            drawIcon('icon-72', 72);
+            drawIcon('icon-96', 96);
+            drawIcon('icon-128', 128);
+            drawIcon('icon-144', 144);
+            drawIcon('icon-152', 152);
+            drawIcon('icon-180', 180);
+            drawIcon('icon-192', 192);
+            drawIcon('icon-384', 384);
+            drawIcon('icon-512', 512);
+            drawMSTile();
+        };
+    </script>
+</body>
+</html>
