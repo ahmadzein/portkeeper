@@ -26,9 +26,11 @@ test/
 
 # Documentation source
 docs/
-website/
+wiki/
 *.md
 !README.md
+!CHANGELOG.md
+!LICENSE
 
 # Scripts
 scripts/
@@ -63,7 +65,12 @@ Thumbs.db
 .cache/
 tmp/
 temp/
-roles/
-TEAM_MEETING_*.md
-TEST_*.md
-COMPREHENSIVE_*.md
+ai/
+tests/
+test-export.json
+install.sh
+.github/
+electron-builder.json
+INSTALL.md
+QUICK_START.md
+RELEASE_NOTES.md
