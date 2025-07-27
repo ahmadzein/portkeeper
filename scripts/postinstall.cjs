@@ -8,7 +8,7 @@ console.log('🔧 Setting up portkeeper...');
 
 try {
   // Get the installation directory - for npm install, we need the actual package directory
-  const installDir = process.env.INIT_CWD || __dirname.replace(/\/scripts$/, '');
+  const installDir = path.resolve(__dirname, '..');
   console.log('Installation directory:', installDir);
   
   // Always rebuild for Node.js first
