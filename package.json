@@ -2,6 +2,29 @@
   "name": "portkeeper",
   "version": "1.2.5",
   "description": "A comprehensive port management tool for developers with CLI and GUI interfaces",
+  "keywords": [
+    "port",
+    "port-management",
+    "port-manager",
+    "network",
+    "development-tools",
+    "cli",
+    "gui",
+    "electron",
+    "developer-tools",
+    "port-scanner",
+    "port-checker",
+    "localhost",
+    "process-management"
+  ],
+  "homepage": "https://github.com/ahmadzein/portkeeper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadzein/portkeeper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ahmadzein/portkeeper/issues"
+  },
   "main": "dist/cli/index.js",
   "type": "module",
   "bin": {
