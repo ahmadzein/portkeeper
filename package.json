@@ -17,7 +17,7 @@
     "localhost",
     "process-management"
   ],
-  "homepage": "https://github.com/ahmadzein/portkeeper",
+  "homepage": "https://portkeeper.net/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahmadzein/portkeeper.git"
